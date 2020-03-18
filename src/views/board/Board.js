@@ -1,11 +1,11 @@
 import React from 'react';
 import commonStyles from './../../common/styles/styles.module.css';
-import styles from './AddBoard.module.css';
+import styles from './Board.module.css';
 
-export const AddBoard = () => {
+export const Board = ({ match }) => {
   return (
     <div className={styles.container}>
-      <h2 className={commonStyles.title}>Create a board</h2>
+      <h2 className={commonStyles.title}>{match.params.name}</h2>
     </div>
   );
 };

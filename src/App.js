@@ -1,21 +1,19 @@
 import React from 'react';
-import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Home } from './views/home/Home';
 import { AddBoard } from './views/create-board/AddBoard';
 import { Header } from './components/header/Header';
+import { Board } from './views/board/Board';
 
 function App() {
   return (
     <Router>
       <Header />
       <Switch>
-        <Route path="/create-board">
-          <AddBoard />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
+        <Route exact path="/" component={Home} />
+        <Route path="/board/create" component={AddBoard} />
+        <Route path="/board/:name" component={Board} />
+        <Route exact path="*" component={Home} />
       </Switch>
     </Router>
   );

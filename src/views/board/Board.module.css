@@ -1,0 +1,4 @@
+.container {
+  composes: container from '../../common/styles/styles.module.css';
+  padding: 15px 0 30px;
+}

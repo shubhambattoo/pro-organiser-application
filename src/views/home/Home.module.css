@@ -1,0 +1,33 @@
+.container {
+  composes: container from '../../common/styles/styles.module.css';
+  padding: 15px 0 30px;
+}
+
+.boards {
+  padding: 25px 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.board {
+  display: block;
+  text-decoration: none;
+  align-self: center;
+  text-align: center;
+  padding: 45px 0;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  background-color: #f3fcfa;
+  color: #333;
+  border-radius: 4px;
+  transition: transform .3s, box-shadow .3s;
+}
+
+.board:hover{
+  transform: scale(1.02) translateY(-10px);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.boardName {
+  font-size: 20px;
+}
