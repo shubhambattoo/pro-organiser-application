@@ -21,6 +21,7 @@
   color: #333;
   border-radius: 4px;
   transition: transform .3s, box-shadow .3s;
+  text-transform: capitalize;
 }
 
 .board:hover{

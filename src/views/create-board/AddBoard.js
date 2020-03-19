@@ -13,6 +13,7 @@ export const AddBoard = () => {
     }
 
     const teamMembers = teamMember.split(',');
+    const id = name.split(/\s+/).join('-');
 
     const newBoard = {
       name,
@@ -21,6 +22,7 @@ export const AddBoard = () => {
     }
 
     console.log(newBoard);
+    console.log(id);
   }
 
   return (
