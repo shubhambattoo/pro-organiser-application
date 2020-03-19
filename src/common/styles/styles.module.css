@@ -12,3 +12,29 @@
   color: #3499fd;
   text-transform: capitalize;
 }
+
+.btn {
+  cursor: pointer;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-size: 16px;
+  text-transform: capitalize;
+}
+
+.info {
+  composes: btn;
+  background-color: #27a6aa;
+  color: #fff;
+  transition: background-color .2s;
+}
+
+.info:hover {
+  background-color: #07787c;
+}
+
+.danger {
+  composes: btn;
+  background-color: #ef5350;
+  color: #fff;
+}

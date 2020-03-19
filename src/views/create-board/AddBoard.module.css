@@ -1,5 +1,29 @@
 .container {
-    composes: container from '../../common/styles/styles.module.css';
-    padding: 15px 0 30px;
-  }
-  
+  composes: container from '../../common/styles/styles.module.css';
+  padding: 15px 0 30px;
+}
+
+.container h2 {
+  margin-bottom: 30px;
+}
+
+.field {
+  margin-bottom: 20px;
+}
+
+.field input {
+  border: 1px solid #adadad;
+  border-radius: 6px;
+  display: block;
+  padding: 10px 12px;
+  width: 100%;
+  font-size: 15px;
+  color: #222;
+}
+
+.field label {
+  font-size: 17px;
+  font-weight: 400;
+  display: block;
+  margin-bottom: 10px;
+}
