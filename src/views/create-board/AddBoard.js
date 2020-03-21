@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import commonStyles from './../../common/styles/styles.module.css';
 import styles from './AddBoard.module.css';
 import { addBoard } from '../../utils/data';
-import { Error } from '../../common/error/Error';
+import { Alert } from '../../common/alert/Alert';
 
 export const AddBoard = ({ history }) => {
   const [name, setName] = useState('');
@@ -48,7 +48,7 @@ export const AddBoard = ({ history }) => {
 
   return (
     <div className={styles.container}>
-      {error && <Error canClose={handleClose}>{error}</Error>}
+      {error && <Alert canClose={handleClose} type={'error'}>{error}</Alert>}
       <h2 className={commonStyles.title}>Create a board</h2>
       <div className={styles.field}>
         <label htmlFor="name">Enter a name for your board</label>

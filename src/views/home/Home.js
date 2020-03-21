@@ -3,6 +3,7 @@ import styles from './Home.module.css';
 import commonStyles from './../../common/styles/styles.module.css';
 import { Link } from 'react-router-dom';
 import { getBoards } from '../../utils/data';
+import { Alert } from '../../common/alert/Alert';
 
 export const Home = () => {
   const [boards, setBoards] = useState([]);
@@ -12,7 +13,7 @@ export const Home = () => {
       .then(boards => {
         setBoards(boards);
       })
-      .catch(err => {
+      .catch(() => {
         setBoards([]);
       });
   }, []);
@@ -20,6 +21,12 @@ export const Home = () => {
   return (
     <div className={styles.container}>
       <h2 className={commonStyles.title}>Boards</h2>
+      {boards.length === 0 && (
+        <Alert type='info' isClosable={false}>
+          You haven't created any boards. Kindly click on the 'Create a Board'
+          button in the navigation bar to create a board.
+        </Alert>
+      )}
       <div className={styles.boards}>
         {boards.map(board => {
           return (

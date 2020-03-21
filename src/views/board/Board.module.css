@@ -2,3 +2,81 @@
   composes: container from '../../common/styles/styles.module.css';
   padding: 15px 0 30px;
 }
+
+.ui {
+  height: calc(100vh - 135px);
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.columns {
+  margin-top: 20px;
+  width: 100%;
+
+  display: flex;
+  overflow-x: auto;
+}
+
+.columns::after {
+  content: '';
+  flex: 0 0 10px;
+}
+
+.columns > * {
+  flex: 0 0 auto;
+}
+
+.columns > *:not(:first-child) {
+  margin-left: 10px;
+}
+
+.column {
+  width: 300px;
+  height: calc(100% - 27px);
+}
+
+.column header {
+  line-height: 36px;
+  font-size: 16px;
+  font-weight: bold;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.column footer {
+  line-height: 36px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  color: #888;
+}
+
+.column > * {
+  background-color: #e2e4e6;
+  color: #333;
+  padding: 0 10px;
+}
+
+.column ul {
+  list-style: none;
+  margin: 0;
+  max-height: calc(100% - 72px);
+  overflow-y: auto;
+}
+
+.column ul li {
+  border-radius: 5px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  padding: 10px;
+}
+
+.column ul li:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.addButton {
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
