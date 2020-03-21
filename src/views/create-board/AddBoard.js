@@ -1,32 +1,45 @@
 import React, { useState } from 'react';
 import commonStyles from './../../common/styles/styles.module.css';
 import styles from './AddBoard.module.css';
+import { addBoard } from '../../utils/data';
+import { Error } from '../../common/error/Error';
 
-export const AddBoard = () => {
+export const AddBoard = ({ history }) => {
   const [name, setName] = useState('');
   const [teamMember, setTeamMember] = useState('');
   const [type, setType] = useState('');
+  const [error, setError] = useState('');
 
   const saveBoard = () => {
     if (!name && !teamMember) {
-      return alert('Name and Team Members are required fields');
+      return setError('Name and Team Members are required fields');
     }
 
     const teamMembers = teamMember.split(',');
-    const id = name.split(/\s+/).join('-');
+    const id = name.split(/\s+/).join('-').toLowerCase();
 
     const newBoard = {
       name,
       teamMembers,
       type
-    }
+    };
 
-    console.log(newBoard);
-    console.log(id);
-  }
+    addBoard(id, newBoard)
+      .then(created => {
+        if (created) {
+          history.push('/');
+        } else {
+          setError('Could not add Board');
+        }
+      })
+      .catch(err => {
+        setError('Could not add Board. Some error occured.');
+      });
+  };
 
   return (
     <div className={styles.container}>
+      {error && <Error>{error}</Error>}
       <h2 className={commonStyles.title}>Create a board</h2>
       <div className={styles.field}>
         <label htmlFor="name">Enter a name for your board</label>
@@ -62,7 +75,12 @@ export const AddBoard = () => {
         />
       </div>
       <div className={styles.field}>
-        <button type="submit" onClick={saveBoard} className={commonStyles.info} id="CreateBoard">
+        <button
+          type="submit"
+          onClick={saveBoard}
+          className={commonStyles.info}
+          id="CreateBoard"
+        >
           Create
         </button>
       </div>
