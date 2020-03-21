@@ -32,3 +32,19 @@ export const addBoard = async (id, board) => {
     return error;
   }
 };
+
+/**
+ * Gets a single board with a given ID
+ * @param {string} id single board ID
+ */
+export const getBoard = async id => {
+  try {
+    const board = await db
+      .collection('boards')
+      .doc(id)
+      .get();
+    return { ...board.data(), id: board.id };
+  } catch (error) {
+    console.log(error);
+  }
+};
