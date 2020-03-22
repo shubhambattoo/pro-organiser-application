@@ -36,18 +36,36 @@
 }
 
 .column header {
-  line-height: 36px;
-  font-size: 16px;
-  font-weight: bold;
+  line-height: 46px;
+  font-size: 17px;
+  font-weight: 500;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  position: relative;
+}
+
+.trash {
+  position: absolute;
+  right: 10px;
+  top: 7px;
+  cursor: pointer;
 }
 
 .column footer {
-  line-height: 36px;
+  line-height: 56px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   color: #888;
+}
+
+.column footer button {
+  cursor: pointer;
+  border: 1px solid gray;
+  background-color: #fff;
+  width: 100%;
+  height: 36px;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .column > * {
@@ -65,9 +83,39 @@
 
 .column ul li {
   border-radius: 5px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
   background-color: #fff;
   padding: 10px;
+}
+
+.column ul li .text {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.column ul li .actions {
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.team {
+  justify-self: flex-end;
+  display: flex;
+}
+
+.team .circle {
+  border-radius: 50%;
+  background-color: rgb(192, 192, 192);
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.team .circle:not(:last-child) {
+  margin-right: 5px;
 }
 
 .column ul li:not(:last-child) {
@@ -75,8 +123,15 @@
 }
 
 .addButton {
-  height: 150px;
+  height: 250px;
+  width: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px dotted gray;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 20px;
+  border-radius: 5px;
+  font-weight: 400;
 }
