@@ -32,3 +32,9 @@
 .boardName {
   font-size: 20px;
 }
+
+@media screen and (max-width:900px) {
+  .container {
+    padding: 15px 15px 30px;
+  }
+}
