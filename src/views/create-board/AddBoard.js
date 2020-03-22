@@ -16,10 +16,6 @@ export const AddBoard = ({ history }) => {
     }
 
     const teamMembers = teamMember.split(',');
-    const id = name
-      .split(/\s+/)
-      .join('-')
-      .toLowerCase();
 
     const newBoard = {
       name,
@@ -27,7 +23,7 @@ export const AddBoard = ({ history }) => {
       type
     };
 
-    addBoard(id, newBoard)
+    addBoard(newBoard)
       .then(created => {
         if (created) {
           history.push('/');
@@ -48,7 +44,11 @@ export const AddBoard = ({ history }) => {
 
   return (
     <div className={styles.container}>
-      {error && <Alert canClose={handleClose} type={'error'}>{error}</Alert>}
+      {error && (
+        <Alert canClose={handleClose} type={'error'}>
+          {error}
+        </Alert>
+      )}
       <h2 className={commonStyles.title}>Create a board</h2>
       <div className={styles.field}>
         <label htmlFor="name">Enter a name for your board</label>

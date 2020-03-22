@@ -19,14 +19,12 @@ export const getBoards = async () => {
  * @param {string} id for the doc
  * @param {object} board the board which has to be created
  */
-export const addBoard = async (id, board) => {
+export const addBoard = async (board) => {
   try {
-    const created = await db
+    await db
       .collection('boards')
-      .doc(id)
-      .set(board);
-    console.log(created.id);
-    return created.id;
+      .add(board);
+    return true;
   } catch (error) {
     console.error(error);
     return error;
@@ -46,5 +44,29 @@ export const getBoard = async id => {
     return { ...board.data(), id: board.id };
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getColumns = async boardId => {
+  try {
+    const snapshot = await db
+      .collection('columns')
+      .where('boardId', '==', boardId)
+      .get();
+    const boards = snapshot.docs.map(d => ({ ...d.data(), id: d.id }));
+    return boards;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+export const addColumn = async (column) => {
+  try {
+    await db.collection('columns').add(column);
+    return true;
+  } catch (error) {
+    console.error(error);
+    return error;
   }
 };
