@@ -3,8 +3,10 @@ import commonStyles from './../../common/styles/styles.module.css';
 import styles from './Board.module.css';
 import { Modal } from './../../common/modal/Modal';
 import { getBoard, getColumns, addColumn } from '../../utils/data';
+import { Loader } from '../../common/loader/Loader';
 
 export const Board = ({ match }) => {
+  const [loading, setLoading] = useState(true);
   const [board, setBoard] = useState({});
   const [isColumnAdd, setIsColumnAdd] = useState(false);
   const [columns, setColumns] = useState([]);
@@ -14,7 +16,8 @@ export const Board = ({ match }) => {
     (async function() {
       const data = await getBoard(match.params.name);
       setBoard(data);
-      getAllColumns(data.id, setColumns);
+      await getAllColumns(data.id, setColumns);
+      setLoading(false);
     })();
   }, [match]);
 
@@ -32,73 +35,84 @@ export const Board = ({ match }) => {
     addColumn(newColumn).then(value => {
       if (value) {
         getAllColumns(board.id, setColumns);
-        setIsColumnAdd(false)
+        setIsColumnAdd(false);
       }
     });
   }
 
+  function handleModalClose() {
+    setIsColumnAdd(false);
+  }
+
   return (
     <>
-      <div className={styles.container}>
-        <h2 className={commonStyles.title}>
-          {board.name}
-        </h2>
-        <div className={styles.ui}>
-          <div className={styles.columns}>
-            {columns.map(column => {
-              return (
-                <div className={styles.column} key={column.id}>
-                  <header>
-                    {column.name}
-                    <div className={styles.trash}>
-                      <i
-                        className="material-icons"
-                        style={{ fontSize: '25px' }}
-                      >
-                        delete_outline
-                      </i>
-                    </div>
-                  </header>
-                  <ul>
-                    <li>
-                      <div className={styles.text}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Itaque, incidunt?
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className={styles.container}>
+          <div className={styles.containerHeader}>
+            <h2 className={commonStyles.title}>{board.name}</h2>
+            <button className={commonStyles.danger}>Delete Board</button>
+          </div>
+          <div className={styles.ui}>
+            <div className={styles.columns}>
+              {columns.map(column => {
+                return (
+                  <div className={styles.column} key={column.id}>
+                    <header>
+                      {column.name}
+                      <div className={styles.trash}>
+                        <i
+                          className="material-icons"
+                          style={{ fontSize: '25px' }}
+                        >
+                          delete_outline
+                        </i>
                       </div>
-                      <div className={styles.actions}>
-                        <div style={{ alignSelf: 'center', cursor: 'pointer' }}>
-                          <i
-                            className="material-icons"
-                            style={{ fontSize: '30px' }}
+                    </header>
+                    <ul>
+                      <li>
+                        <div className={styles.text}>
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Itaque, incidunt?
+                        </div>
+                        <div className={styles.actions}>
+                          <div
+                            style={{ alignSelf: 'center', cursor: 'pointer' }}
                           >
-                            list
-                          </i>
+                            <i
+                              className="material-icons"
+                              style={{ fontSize: '30px' }}
+                            >
+                              list
+                            </i>
+                          </div>
+                          <div className={styles.team}>
+                            <div className={styles.circle}>NN</div>
+                            <div className={styles.circle}>AB</div>
+                          </div>
                         </div>
-                        <div className={styles.team}>
-                          <div className={styles.circle}>NN</div>
-                          <div className={styles.circle}>AB</div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                  <footer>
-                    <button>Add a Card</button>
-                  </footer>
-                </div>
-              );
-            })}
-            <button
-              id="CreateColumn"
-              onClick={() => setIsColumnAdd(true)}
-              className={styles.addButton}
-            >
-              Add column
-            </button>
+                      </li>
+                    </ul>
+                    <footer>
+                      <button>Add a Card</button>
+                    </footer>
+                  </div>
+                );
+              })}
+              <button
+                id="CreateColumn"
+                onClick={() => setIsColumnAdd(true)}
+                className={styles.addButton}
+              >
+                Add column
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
       {isColumnAdd && (
-        <Modal>
+        <Modal handleClose={handleModalClose}>
           <div className={styles.modalHead}>Add Column</div>
           <div className={styles.modalBody}>
             <div className={styles.field}>
@@ -108,7 +122,7 @@ export const Board = ({ match }) => {
                 value={columnName}
                 name="column_name"
                 id="column_name"
-                onChange={(e) => setColumnName(e.target.value)}
+                onChange={e => setColumnName(e.target.value)}
               />
             </div>
             <div className={styles.action}>

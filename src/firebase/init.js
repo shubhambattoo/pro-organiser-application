@@ -1,5 +1,5 @@
 /* eslint-disable */
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import firestore from 'firebase/firestore';
 
 const config = {

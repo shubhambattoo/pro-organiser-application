@@ -3,8 +3,18 @@
   padding: 15px 0 30px;
 }
 
+.containerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.containerHeader button{
+  font-size: 15px;
+}
+
 .ui {
-  height: calc(100vh - 135px);
+  height: calc(100vh - 140px);
   display: grid;
   grid-template-rows: 1fr;
 }
