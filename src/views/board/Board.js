@@ -4,6 +4,7 @@ import styles from './Board.module.css';
 import { Modal } from './../../common/modal/Modal';
 import { getBoard, getColumns, addColumn } from '../../utils/data';
 import { Loader } from '../../common/loader/Loader';
+import { Card } from '../../components/card/Card';
 
 export const Board = ({ match }) => {
   const [loading, setLoading] = useState(true);
@@ -71,28 +72,7 @@ export const Board = ({ match }) => {
                       </div>
                     </header>
                     <ul>
-                      <li>
-                        <div className={styles.text}>
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Itaque, incidunt?
-                        </div>
-                        <div className={styles.actions}>
-                          <div
-                            style={{ alignSelf: 'center', cursor: 'pointer' }}
-                          >
-                            <i
-                              className="material-icons"
-                              style={{ fontSize: '30px' }}
-                            >
-                              list
-                            </i>
-                          </div>
-                          <div className={styles.team}>
-                            <div className={styles.circle}>NN</div>
-                            <div className={styles.circle}>AB</div>
-                          </div>
-                        </div>
-                      </li>
+                      <Card />
                     </ul>
                     <footer>
                       <button>Add a Card</button>

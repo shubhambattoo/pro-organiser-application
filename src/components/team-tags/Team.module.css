@@ -1,0 +1,13 @@
+.circle {
+  border-radius: 50%;
+  background-color: rgb(192, 192, 192);
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.circle:not(:last-child) {
+  margin-right: 5px;
+}

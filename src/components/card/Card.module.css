@@ -1,0 +1,26 @@
+.item {
+  border-radius: 5px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  padding: 10px;
+}
+
+.text {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.actions {
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.team {
+  justify-self: flex-end;
+  display: flex;
+}
+
+.item:not(:last-child) {
+  margin-bottom: 10px;
+}

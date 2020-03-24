@@ -92,47 +92,6 @@
   overflow-y: auto;
 }
 
-.column ul li {
-  border-radius: 5px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  background-color: #fff;
-  padding: 10px;
-}
-
-.column ul li .text {
-  font-size: 14px;
-  font-weight: 400;
-}
-
-.column ul li .actions {
-  margin-top: 5px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.team {
-  justify-self: flex-end;
-  display: flex;
-}
-
-.team .circle {
-  border-radius: 50%;
-  background-color: rgb(192, 192, 192);
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  font-size: 14px;
-}
-
-.team .circle:not(:last-child) {
-  margin-right: 5px;
-}
-
-.column ul li:not(:last-child) {
-  margin-bottom: 10px;
-}
-
 .addButton {
   height: 250px;
   width: 250px;
@@ -176,6 +135,11 @@
   flex: 3;
 }
 
+.actionBtn {
+  align-self: center;
+  cursor: move;
+}
+
 .action {
   display: flex;
   justify-content: flex-end;
@@ -188,6 +152,6 @@
 
 @media screen and (max-width:900px) {
   .container {
-    padding: 0 15px;
+    padding: 15px;
   }
 }
