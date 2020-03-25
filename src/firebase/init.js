@@ -5,7 +5,7 @@ import firestore from 'firebase/firestore';
 const config = {
   apiKey: process.env.REACT_APP_APIKEY,
   authDomain: 'pro-organisers.firebaseapp.com',
-  databaseURL: 'https://pro-organisers.firebaseio.com',
+  databaseURL: process.env.REACT_APP_DBURL,
   projectId: 'pro-organisers',
   storageBucket: 'pro-organisers.appspot.com',
   messagingSenderId: process.env.REACT_APP_messagingSenderId,

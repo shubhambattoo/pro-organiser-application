@@ -72,7 +72,9 @@ export const Board = ({ match }) => {
                       </div>
                     </header>
                     <ul>
-                      <Card />
+                      {column.cards.map(card => (
+                        <Card card={card} key={card.date} />
+                      ))}
                     </ul>
                     <footer>
                       <button>Add a Card</button>
