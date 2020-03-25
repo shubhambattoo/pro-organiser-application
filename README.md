@@ -1,4 +1,4 @@
-# ** Team Collaboration App(Pro-Organiser)**
+# Team Collaboration App(Pro-Organiser)
 
 ## Overview
 
