@@ -2,7 +2,7 @@
 
 ## Overview
 
-Use react-router, CSS modules and the advanced concepts of React that you have learnt in the Sprint 5 to create a Team Collaboration App.
+Trello like collaboration web app made using react, firebase.
 
 
 ## Web application mock up
