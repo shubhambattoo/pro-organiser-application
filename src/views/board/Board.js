@@ -30,7 +30,8 @@ export const Board = ({ match }) => {
     const newColumn = {
       boardId: board.id,
       name: columnName,
-      cards: []
+      cards: [],
+      created: new Date()
     };
 
     addColumn(newColumn).then(value => {
@@ -73,7 +74,7 @@ export const Board = ({ match }) => {
                     </header>
                     <ul>
                       {column.cards.map(card => (
-                        <Card card={card} key={card.date} />
+                        <Card card={card} board={board} key={card.date} />
                       ))}
                     </ul>
                     <footer>

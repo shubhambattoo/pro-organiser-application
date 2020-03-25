@@ -6,6 +6,7 @@
   line-height: 30px;
   text-align: center;
   font-size: 14px;
+  text-transform: uppercase;
 }
 
 .circle:not(:last-child) {
