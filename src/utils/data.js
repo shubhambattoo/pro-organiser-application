@@ -64,7 +64,22 @@ export const getColumns = async boardId => {
 
 export const addColumn = async (column) => {
   try {
-    await db.collection('columns').add(column);
+    const d = await db.collection('columns').add(column);
+    return d.id;
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+};
+
+/**
+ * to update column
+ * @param {string} id the id of the column
+ * @param {any} column updated schema of column
+ */
+export const updateColumn = async (id, column) => {
+  try {
+    await db.collection('columns').doc(id).update(column);
     return true;
   } catch (error) {
     console.error(error);

@@ -20,7 +20,7 @@
   z-index: 2;
 }
 
-.close {
+/* .close {
   position: absolute;
   top: 25%;
   right: 20%;
@@ -34,4 +34,4 @@
   font-size: 35px;
   cursor: pointer;
   color: #333;
-}
+} */

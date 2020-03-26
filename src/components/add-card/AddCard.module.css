@@ -1,0 +1,47 @@
+.modalHead {
+  composes: modalHead from './../../common/styles/styles.module.css';
+  color: #3998e6;
+  font-size: 24px;
+  padding-bottom: 20px;
+  font-weight: 400;
+}
+
+.close {
+  composes: modalClose from './../../common/styles/styles.module.css';
+}
+
+.modalBody {
+  padding: 0 10px 10px 0;
+}
+
+.formField {
+  display: flex;
+  margin-bottom: 15px;
+  flex-direction: column;
+}
+
+.formField label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.formField input {
+  display: block;
+  width: 100%;
+  border: 1px solid #c8c8c8;
+  padding: 8px 10px;
+  border-radius: 5px;
+}
+
+.formField select {
+  display: block;
+  width: 100%;
+  border: 1px solid #c8c8c8;
+  border-radius: 5px;
+}
+
+.formField select option {
+  text-transform: capitalize;
+}

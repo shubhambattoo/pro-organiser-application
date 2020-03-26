@@ -13,6 +13,20 @@
   text-transform: capitalize;
 }
 
+.modalHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modalClose {
+  color: rgb(255, 74, 74);
+  font-size: 28px;
+  font-weight: 500;
+  align-self: flex-start;
+  cursor: pointer;
+}
+
 .btn {
   cursor: pointer;
   border: none;

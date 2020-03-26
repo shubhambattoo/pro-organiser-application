@@ -106,50 +106,6 @@
   font-weight: 400;
 }
 
-.modalHead {
-  color: #3998e6;
-  font-size: 24px;
-  padding-bottom: 20px;
-  font-weight: 400;
-}
-
-.modalBody {
-  padding: 0 10px 10px 0;
-}
-
-.field {
-  display: flex;
-}
-
-.field label {
-  margin-right: 10px;
-  align-self: center;
-  font-size: 17px;
-  flex: 1;
-}
-
-.field input {
-  border: 1px solid #c8c8c8;
-  padding: 8px 10px;
-  border-radius: 5px;
-  flex: 3;
-}
-
-.actionBtn {
-  align-self: center;
-  cursor: move;
-}
-
-.action {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-}
-
-.action button {
-  font-size: 15px;
-}
-
 @media screen and (max-width:900px) {
   .container {
     padding: 15px;

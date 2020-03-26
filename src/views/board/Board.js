@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import commonStyles from './../../common/styles/styles.module.css';
 import styles from './Board.module.css';
-import { Modal } from './../../common/modal/Modal';
 import { getBoard, getColumns, addColumn } from '../../utils/data';
 import { Loader } from '../../common/loader/Loader';
 import { Card } from '../../components/card/Card';
+import { AddCard } from '../../components/add-card/AddCard';
+import { AddColumn } from '../../components/add-column/AddColumn';
 
 export const Board = ({ match }) => {
   const [loading, setLoading] = useState(true);
   const [board, setBoard] = useState({});
   const [isColumnAdd, setIsColumnAdd] = useState(false);
   const [columns, setColumns] = useState([]);
-  const [columnName, setColumnName] = useState('');
+  const [isCardAdd, setIsCardAdd] = useState(false);
 
   useEffect(() => {
     (async function() {
@@ -22,11 +23,7 @@ export const Board = ({ match }) => {
     })();
   }, [match]);
 
-  function handleAddCloumn() {
-    if (!columnName) {
-      return alert('Enter a column name');
-    }
-
+  function handleAddCloumn(columnName) {
     const newColumn = {
       boardId: board.id,
       name: columnName,
@@ -44,6 +41,10 @@ export const Board = ({ match }) => {
 
   function handleModalClose() {
     setIsColumnAdd(false);
+  }
+
+  function addCard(card) {
+    
   }
 
   return (
@@ -78,7 +79,7 @@ export const Board = ({ match }) => {
                       ))}
                     </ul>
                     <footer>
-                      <button>Add a Card</button>
+                      <button onClick={() => setIsCardAdd(true)}>Add a Card</button>
                     </footer>
                   </div>
                 );
@@ -95,30 +96,10 @@ export const Board = ({ match }) => {
         </div>
       )}
       {isColumnAdd && (
-        <Modal handleClose={handleModalClose}>
-          <div className={styles.modalHead}>Add Column</div>
-          <div className={styles.modalBody}>
-            <div className={styles.field}>
-              <label htmlFor="column_name">Enter a Column Name:</label>
-              <input
-                type="text"
-                value={columnName}
-                name="column_name"
-                id="column_name"
-                onChange={e => setColumnName(e.target.value)}
-              />
-            </div>
-            <div className={styles.action}>
-              <button
-                id="CreateColumn"
-                onClick={handleAddCloumn}
-                className={commonStyles.info}
-              >
-                Add Column
-              </button>
-            </div>
-          </div>
-        </Modal>
+        <AddColumn handleClose={handleModalClose} handleAdd={handleAddCloumn} />
+      )}
+      {isCardAdd && (
+        <AddCard board={board} handleCardAdd={addCard} />
       )}
     </>
   );

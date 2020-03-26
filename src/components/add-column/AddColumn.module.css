@@ -1,0 +1,53 @@
+.modalHead {
+  color: #3998e6;
+  font-size: 24px;
+  padding-bottom: 20px;
+  font-weight: 400;
+  display: flex;
+  justify-content: space-between;
+}
+
+.close {
+  color: rgb(255, 74, 74);
+  font-size: 28px;
+  font-weight: 500;
+  align-self: flex-start;
+  cursor: pointer;
+}
+
+.modalBody {
+  padding: 0 10px 10px 0;
+}
+
+.field {
+  display: flex;
+}
+
+.field label {
+  margin-right: 10px;
+  align-self: center;
+  font-size: 17px;
+  flex: 1;
+}
+
+.field input {
+  border: 1px solid #c8c8c8;
+  padding: 8px 10px;
+  border-radius: 5px;
+  flex: 3;
+}
+
+.actionBtn {
+  align-self: center;
+  cursor: move;
+}
+
+.action {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.action button {
+  font-size: 15px;
+}
