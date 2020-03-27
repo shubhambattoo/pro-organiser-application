@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import commonStyles from './../../common/styles/styles.module.css';
 import styles from './Board.module.css';
-import { getBoard, getColumns, addColumn } from '../../utils/data';
+import {
+  getBoard,
+  getColumns,
+  addColumn,
+  updateColumn
+} from '../../utils/data';
 import { Loader } from '../../common/loader/Loader';
 import { Card } from '../../components/card/Card';
 import { AddCard } from '../../components/add-card/AddCard';
@@ -13,6 +18,7 @@ export const Board = ({ match }) => {
   const [isColumnAdd, setIsColumnAdd] = useState(false);
   const [columns, setColumns] = useState([]);
   const [isCardAdd, setIsCardAdd] = useState(false);
+  const [selectedColumn, setSelectedColumn] = useState(null);
 
   useEffect(() => {
     (async function() {
@@ -28,12 +34,13 @@ export const Board = ({ match }) => {
       boardId: board.id,
       name: columnName,
       cards: [],
-      created: new Date()
+      created: Date.now()
     };
 
     addColumn(newColumn).then(value => {
       if (value) {
-        getAllColumns(board.id, setColumns);
+        newColumn['id'] = value;
+        setColumns([...columns, newColumn]);
         setIsColumnAdd(false);
       }
     });
@@ -43,8 +50,29 @@ export const Board = ({ match }) => {
     setIsColumnAdd(false);
   }
 
-  function addCard(card) {
-    
+  function openAddCard(column) {
+    setIsCardAdd(true);
+    setSelectedColumn(column);
+  }
+
+  async function addCard(card) {
+    try {
+      card['id'] = selectedColumn.cards.length + 1;
+      const cards = [...selectedColumn.cards, card];
+      const uColumn = JSON.parse(JSON.stringify(selectedColumn));
+      uColumn.cards = cards;
+      const val = await updateColumn(uColumn.id, uColumn);
+      if (val) {
+        console.log('updated column');
+        const filColumns = columns.filter((cl) => cl.id !== selectedColumn.id);
+        const newColumns = [...filColumns, uColumn];
+        newColumns.sort((a,b) => a.created - b.created);
+        setColumns(newColumns);
+        setIsCardAdd(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -79,7 +107,9 @@ export const Board = ({ match }) => {
                       ))}
                     </ul>
                     <footer>
-                      <button onClick={() => setIsCardAdd(true)}>Add a Card</button>
+                      <button onClick={() => openAddCard(column)}>
+                        Add a Card
+                      </button>
                     </footer>
                   </div>
                 );
@@ -98,9 +128,7 @@ export const Board = ({ match }) => {
       {isColumnAdd && (
         <AddColumn handleClose={handleModalClose} handleAdd={handleAddCloumn} />
       )}
-      {isCardAdd && (
-        <AddCard board={board} handleCardAdd={addCard} />
-      )}
+      {isCardAdd && <AddCard board={board} handleCardAdd={addCard} />}
     </>
   );
 };
