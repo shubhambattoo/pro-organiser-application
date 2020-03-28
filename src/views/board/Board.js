@@ -11,6 +11,7 @@ import { Loader } from '../../common/loader/Loader';
 import { Card } from '../../components/card/Card';
 import { AddCard } from '../../components/add-card/AddCard';
 import { AddColumn } from '../../components/add-column/AddColumn';
+import { createDeepCopy } from '../../utils/utility';
 
 export const Board = ({ match }) => {
   const [loading, setLoading] = useState(true);
@@ -19,6 +20,8 @@ export const Board = ({ match }) => {
   const [columns, setColumns] = useState([]);
   const [isCardAdd, setIsCardAdd] = useState(false);
   const [selectedColumn, setSelectedColumn] = useState(null);
+  const [isAdd, setIsAdd] = useState(true);
+  const [inEditCard, setInEditCard] = useState(null);
 
   useEffect(() => {
     (async function() {
@@ -59,19 +62,33 @@ export const Board = ({ match }) => {
     try {
       card['id'] = selectedColumn.cards.length + 1;
       const cards = [...selectedColumn.cards, card];
-      const uColumn = JSON.parse(JSON.stringify(selectedColumn));
+      const uColumn = createDeepCopy(selectedColumn);
       uColumn.cards = cards;
       const val = await updateColumn(uColumn.id, uColumn);
       if (val) {
-        console.log('updated column');
-        const filColumns = columns.filter((cl) => cl.id !== selectedColumn.id);
-        const newColumns = [...filColumns, uColumn];
-        newColumns.sort((a,b) => a.created - b.created);
-        setColumns(newColumns);
+        afterUpdateColumn(columns, selectedColumn, uColumn, setColumns);
         setIsCardAdd(false);
       }
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  function openCardEdit(card, column) {
+    setIsAdd(false);
+    setIsCardAdd(true);
+    setSelectedColumn(column);
+    setInEditCard(card);
+  }
+
+  async function handleCardArchive(card, column) {
+    card.isArchive = true;
+    const newCards = column.cards.filter(c => c.id !== card.id);
+    const upColumn = createDeepCopy(column);
+    upColumn.cards = [...newCards, card].sort((a, b) => a.id - b.id);
+    const val = await updateColumn(column.id, upColumn);
+    if (val) {
+      afterUpdateColumn(columns, column, upColumn, setColumns);
     }
   }
 
@@ -102,9 +119,20 @@ export const Board = ({ match }) => {
                       </div>
                     </header>
                     <ul>
-                      {column.cards.map(card => (
-                        <Card card={card} board={board} key={card.date} />
-                      ))}
+                      {column.cards.map(
+                        card =>
+                          !card.isArchive && (
+                            <Card
+                              card={card}
+                              board={board}
+                              key={card.id}
+                              hanldeEdit={() => openCardEdit(card, column)}
+                              hanldeArchive={() =>
+                                handleCardArchive(card, column)
+                              }
+                            />
+                          )
+                      )}
                     </ul>
                     <footer>
                       <button onClick={() => openAddCard(column)}>
@@ -128,10 +156,25 @@ export const Board = ({ match }) => {
       {isColumnAdd && (
         <AddColumn handleClose={handleModalClose} handleAdd={handleAddCloumn} />
       )}
-      {isCardAdd && <AddCard board={board} handleCardAdd={addCard} handleClose={() => setIsCardAdd(false)} />}
+      {isCardAdd && (
+        <AddCard
+          board={board}
+          handleCardAdd={addCard}
+          handleClose={() => setIsCardAdd(false)}
+          isAdd={isAdd}
+          card={inEditCard}
+        />
+      )}
     </>
   );
 };
+
+function afterUpdateColumn(columns, selectedColumn, upColumn, setColumns) {
+  const filColumns = columns.filter(cl => cl.id !== selectedColumn.id);
+  const newColumns = [...filColumns, upColumn];
+  newColumns.sort((a, b) => a.created - b.created);
+  setColumns(newColumns);
+}
 
 async function getAllColumns(id, setColumns) {
   const resCols = await getColumns(id);

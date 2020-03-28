@@ -14,5 +14,7 @@ const months = [
 ];
 
 export const convertDateToNice = date => {
-    return `${date.getDate()} ${months[date.getMonth()]}, ${date.getFullYear()}`;
+  return `${date.getDate()} ${months[date.getMonth()]}, ${date.getFullYear()}`;
 };
+
+export const createDeepCopy = obj => JSON.parse(JSON.stringify(obj));

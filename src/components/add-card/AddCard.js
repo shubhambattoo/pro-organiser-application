@@ -4,7 +4,13 @@ import styles from './AddCard.module.css';
 import commonStyles from './../../common/styles/styles.module.css';
 import { Alert } from '../../common/alert/Alert';
 
-export const AddCard = ({ board, handleCardAdd, handleClose, isAdd = true }) => {
+export const AddCard = ({
+  board,
+  handleCardAdd,
+  handleClose,
+  isAdd = true,
+  card
+}) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
@@ -35,8 +41,9 @@ export const AddCard = ({ board, handleCardAdd, handleClose, isAdd = true }) => 
     const card = {
       title,
       description,
-      date: new Date(dueDate),
-      teamMembers: team
+      date: dueDateMili,
+      teamMembers: team,
+      isArchive: false
     };
 
     handleCardAdd(card);
@@ -45,8 +52,10 @@ export const AddCard = ({ board, handleCardAdd, handleClose, isAdd = true }) => 
   return (
     <Modal>
       <div className={styles.modalHead}>
-        <div>Add Card</div>
-        <div className={styles.close} onClick={handleClose} >&times;</div>
+        <div>{isAdd ? 'Add Card' : 'Edit Card'}</div>
+        <div className={styles.close} onClick={handleClose}>
+          &times;
+        </div>
       </div>
       {error && (
         <Alert
@@ -107,9 +116,13 @@ export const AddCard = ({ board, handleCardAdd, handleClose, isAdd = true }) => 
           />
         </div>
         <div className={styles.formField}>
-          <button className={commonStyles.info} onClick={onAdd}>
-            Add Card
-          </button>
+          {isAdd ? (
+            <button className={commonStyles.info} onClick={onAdd}>
+              Add Card
+            </button>
+          ) : (
+            <button className={commonStyles.info}>Edit Card</button>
+          )}
         </div>
       </div>
     </Modal>
