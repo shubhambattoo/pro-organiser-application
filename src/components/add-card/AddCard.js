@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal } from '../../common/modal/Modal';
 import styles from './AddCard.module.css';
 import commonStyles from './../../common/styles/styles.module.css';
@@ -8,14 +8,25 @@ export const AddCard = ({
   board,
   handleCardAdd,
   handleClose,
+  card,
   isAdd = true,
-  card
+  handleEdit
 }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [team, setTeam] = useState([]);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (card) {
+      setTitle(card.title);
+      setDescription(card.description);
+      setTeam(card.teamMembers);
+      const date = new Date(card.date);
+      setDueDate(date.toISOString().substr(0, 10));
+    }
+  }, [isAdd, card]);
 
   function onSelectChange(e) {
     const values = [...e.target.selectedOptions].map(opt => opt.value);
@@ -28,25 +39,38 @@ export const AddCard = ({
       return;
     }
 
-    const today = new Date().getTime();
-    const dueDateMili = new Date(dueDate).getTime();
+    const checkDateBool = checkDate(dueDate);
 
-    if (dueDateMili < today) {
+    if (checkDateBool) {
       setError('Cannot select a past date.');
       return;
     }
 
     setError(null);
 
-    const card = {
-      title,
-      description,
-      date: dueDateMili,
-      teamMembers: team,
-      isArchive: false
-    };
+    const card = createCard(dueDate, title, team, description);
 
     handleCardAdd(card);
+  }
+
+  function onEdit() {
+    if (!title || !description || !dueDate || team.length === 0) {
+      setError('All the fields are required');
+      return;
+    }
+
+    const checkDateBool = checkDate(dueDate);
+
+    if (checkDateBool) {
+      setError('Cannot select a past date.');
+      return;
+    }
+
+    setError(null);
+
+    const card = createCard(dueDate, title, team, description);
+
+    handleEdit(card);
   }
 
   return (
@@ -121,10 +145,34 @@ export const AddCard = ({
               Add Card
             </button>
           ) : (
-            <button className={commonStyles.info}>Edit Card</button>
+            <button className={commonStyles.info} onClick={onEdit}>
+              Edit Card
+            </button>
           )}
         </div>
       </div>
     </Modal>
   );
 };
+
+function checkDate(dueDate) {
+  const today = new Date().getTime();
+  const dueDateMili = new Date(dueDate).getTime();
+
+  if (dueDateMili < today) {
+    return true;
+  }
+
+  return false;
+}
+
+function createCard(dueDate, title, teamMembers, description) {
+  const date = new Date(dueDate).getTime();
+  return {
+    title,
+    description,
+    teamMembers,
+    date,
+    isArchive: false
+  };
+}

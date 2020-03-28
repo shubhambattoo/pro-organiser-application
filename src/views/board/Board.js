@@ -56,6 +56,7 @@ export const Board = ({ match }) => {
   function openAddCard(column) {
     setIsCardAdd(true);
     setSelectedColumn(column);
+    setInEditCard(null);
   }
 
   async function addCard(card) {
@@ -79,6 +80,26 @@ export const Board = ({ match }) => {
     setIsCardAdd(true);
     setSelectedColumn(column);
     setInEditCard(card);
+  }
+
+  async function handleCardEdit(upCard) {
+    try {
+      const card = { id: inEditCard.id, ...upCard };
+      const uColumn = createDeepCopy(selectedColumn);
+      const cards = selectedColumn.cards.filter(c => c.id !== inEditCard.id);
+      const newCards = [...cards, card].sort((a, b) => a.id - b.id);
+      uColumn.cards = newCards;
+      const val = await updateColumn(selectedColumn.id, uColumn);
+      if (val) {
+        afterUpdateColumn(columns, selectedColumn, uColumn, setColumns);
+        setIsAdd(true);
+        setIsCardAdd(false);
+        setSelectedColumn(null);
+        setInEditCard(null);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function handleCardArchive(card, column) {
@@ -163,6 +184,7 @@ export const Board = ({ match }) => {
           handleClose={() => setIsCardAdd(false)}
           isAdd={isAdd}
           card={inEditCard}
+          handleEdit={handleCardEdit}
         />
       )}
     </>
