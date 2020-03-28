@@ -125,8 +125,12 @@ export const Board = ({ match }) => {
     newColumn.cards = [...newColumn.cards, card];
     const val1 = await updateColumn(newColumn.id, newColumn);
     if (val && val1) {
-      const newCols = columns.filter(col => col.id !== oldColumn.id && col.id !== newColumn.id);
-      const sortedCols = [...newCols, oldColumn, newColumn].sort((a,b) => a.created = b.created);
+      const newCols = columns.filter(
+        col => col.id !== oldColumn.id && col.id !== newColumn.id
+      );
+      const sortedCols = [...newCols, oldColumn, newColumn].sort(
+        (a, b) => a.created - b.created
+      );
       setColumns(sortedCols);
     }
   }
