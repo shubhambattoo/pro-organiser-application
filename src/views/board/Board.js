@@ -128,7 +128,7 @@ export const Board = ({ match }) => {
       {isColumnAdd && (
         <AddColumn handleClose={handleModalClose} handleAdd={handleAddCloumn} />
       )}
-      {isCardAdd && <AddCard board={board} handleCardAdd={addCard} />}
+      {isCardAdd && <AddCard board={board} handleCardAdd={addCard} handleClose={() => setIsCardAdd(false)} />}
     </>
   );
 };

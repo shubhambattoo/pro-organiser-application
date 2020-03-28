@@ -26,3 +26,85 @@
   margin-bottom: 10px;
 }
 
+.modalHeader {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #a8a8a8;
+  padding-bottom: 5px;
+}
+
+.modalClose {
+  position: absolute;
+  top: -80px;
+  right: -40px;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 30px;
+  cursor: pointer;
+  color: rgb(255, 74, 74);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 300;
+  color: #3998e6;
+  text-transform: capitalize;
+}
+
+.meta {
+  margin-top: 4px;
+  font-size: 15px;
+  color: rgb(82, 82, 82);
+  font-weight: 400;
+}
+
+.btnGroup {
+	align-self: center;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.btnGroup button {
+  font-size: 14px;
+}
+
+.btnGroup button:not(:last-child) {
+  margin-right: 8px;
+}
+
+.modalBody {
+  padding: 20px 0;
+}
+
+.det {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.det:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.det header {
+  font-size: 18px;
+  line-height: 1;
+  font-weight: 400;
+  text-transform: capitalize;
+}
+
+.det div {
+  font-size: 15px;
+  color: #444;
+  font-weight: 300;
+}
+
+.detTeam {
+  display: flex;
+}

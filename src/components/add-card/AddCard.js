@@ -4,7 +4,7 @@ import styles from './AddCard.module.css';
 import commonStyles from './../../common/styles/styles.module.css';
 import { Alert } from '../../common/alert/Alert';
 
-export const AddCard = ({ board, handleCardAdd, isAdd = true }) => {
+export const AddCard = ({ board, handleCardAdd, handleClose, isAdd = true }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
@@ -46,7 +46,7 @@ export const AddCard = ({ board, handleCardAdd, isAdd = true }) => {
     <Modal>
       <div className={styles.modalHead}>
         <div>Add Card</div>
-        <div className={styles.close}>&times;</div>
+        <div className={styles.close} onClick={handleClose} >&times;</div>
       </div>
       {error && (
         <Alert
