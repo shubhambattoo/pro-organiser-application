@@ -5,7 +5,7 @@ import { Team } from '../team-tags/Team';
 import { Modal } from '../../common/modal/Modal';
 import { convertDateToNice } from '../../utils/utility';
 
-export const Card = ({ card, board, hanldeEdit, hanldeArchive }) => {
+export const Card = ({ card, board, hanldeEdit, hanldeArchive, column }) => {
   const [isDetails, setIsDetails] = useState(false);
   const members = card.teamMembers.map(name => <Team name={name} key={name} />);
   const date = new Date(card.date);
@@ -16,13 +16,13 @@ export const Card = ({ card, board, hanldeEdit, hanldeArchive }) => {
     hanldeEdit();
   }
 
-  function doArchive () {
+  function doArchive() {
     setIsDetails(false);
     hanldeArchive();
   }
 
   const detailsModal = (
-    <Modal >
+    <Modal>
       <div className={styles.modalHeader}>
         <div className={styles.title}>
           {card.title}
@@ -31,8 +31,12 @@ export const Card = ({ card, board, hanldeEdit, hanldeArchive }) => {
           </div>
         </div>
         <div className={styles.btnGroup}>
-          <button className={commonStyles.info} onClick={doEdit}>Edit</button>
-          <button className={commonStyles.danger} onClick={doArchive} >Archive</button>
+          <button className={commonStyles.info} onClick={doEdit}>
+            Edit
+          </button>
+          <button className={commonStyles.danger} onClick={doArchive}>
+            Archive
+          </button>
         </div>
         <div className={styles.modalClose} onClick={() => setIsDetails(false)}>
           &times;
@@ -55,13 +59,28 @@ export const Card = ({ card, board, hanldeEdit, hanldeArchive }) => {
     </Modal>
   );
 
+  function dragStart(ev, card) {
+    // console.log(ev)
+    // console.log(card);
+    ev.dataTransfer.setData("card", JSON.stringify(card));
+    ev.dataTransfer.setData("columnFrom", JSON.stringify(column));
+  }
+
   return (
     <>
-      <li className={styles.item} onClick={() => setIsDetails(true)}>
+      <li
+        className={styles.item}
+        onDragStart={e => dragStart(e, card)}
+        draggable
+        onClick={() => setIsDetails(true)}
+      >
         <div className={styles.text}>{card.title}</div>
         <div className={styles.actions}>
           <div className={styles.actionBtn}>
-            <i className="material-icons" style={{ fontSize: '30px', cursor: 'move' }}>
+            <i
+              className="material-icons"
+              style={{ fontSize: '30px', cursor: 'move' }}
+            >
               list
             </i>
           </div>

@@ -12,6 +12,7 @@ import { Card } from '../../components/card/Card';
 import { AddCard } from '../../components/add-card/AddCard';
 import { AddColumn } from '../../components/add-column/AddColumn';
 import { createDeepCopy } from '../../utils/utility';
+import * as shortid from 'shortid';
 
 export const Board = ({ match }) => {
   const [loading, setLoading] = useState(true);
@@ -61,7 +62,7 @@ export const Board = ({ match }) => {
 
   async function addCard(card) {
     try {
-      card['id'] = selectedColumn.cards.length + 1;
+      card['id'] = shortid();
       const cards = [...selectedColumn.cards, card];
       const uColumn = createDeepCopy(selectedColumn);
       uColumn.cards = cards;
@@ -106,10 +107,27 @@ export const Board = ({ match }) => {
     card.isArchive = true;
     const newCards = column.cards.filter(c => c.id !== card.id);
     const upColumn = createDeepCopy(column);
-    upColumn.cards = [...newCards, card].sort((a, b) => a.id - b.id);
+    upColumn.cards = [...newCards, card];
     const val = await updateColumn(column.id, upColumn);
     if (val) {
       afterUpdateColumn(columns, column, upColumn, setColumns);
+    }
+  }
+
+  async function onDragDrop(ev, newColumn) {
+    const card = JSON.parse(ev.dataTransfer.getData('card'));
+    const oldColumn = JSON.parse(ev.dataTransfer.getData('columnFrom'));
+    if (oldColumn.id === newColumn.id) {
+      return;
+    }
+    oldColumn.cards = oldColumn.cards.filter(c => c.id !== card.id);
+    const val = await updateColumn(oldColumn.id, oldColumn);
+    newColumn.cards = [...newColumn.cards, card];
+    const val1 = await updateColumn(newColumn.id, newColumn);
+    if (val && val1) {
+      const newCols = columns.filter(col => col.id !== oldColumn.id && col.id !== newColumn.id);
+      const sortedCols = [...newCols, oldColumn, newColumn].sort((a,b) => a.created = b.created);
+      setColumns(sortedCols);
     }
   }
 
@@ -139,7 +157,12 @@ export const Board = ({ match }) => {
                         </i>
                       </div>
                     </header>
-                    <ul>
+                    <ul
+                      onDragOver={e => e.preventDefault()}
+                      onDrop={e => {
+                        onDragDrop(e, column);
+                      }}
+                    >
                       {column.cards.map(
                         card =>
                           !card.isArchive && (
@@ -151,6 +174,7 @@ export const Board = ({ match }) => {
                               hanldeArchive={() =>
                                 handleCardArchive(card, column)
                               }
+                              column={column}
                             />
                           )
                       )}
