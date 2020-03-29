@@ -5,7 +5,8 @@ import {
   getBoard,
   getColumns,
   addColumn,
-  updateColumn
+  updateColumn,
+  deleteColumn
 } from '../../utils/data';
 import { Loader } from '../../common/loader/Loader';
 import { Card } from '../../components/card/Card';
@@ -13,6 +14,7 @@ import { AddCard } from '../../components/add-card/AddCard';
 import { AddColumn } from '../../components/add-column/AddColumn';
 import { createDeepCopy } from '../../utils/utility';
 import * as shortid from 'shortid';
+import { Alert } from '../../common/alert/Alert';
 
 export const Board = ({ match }) => {
   const [loading, setLoading] = useState(true);
@@ -23,6 +25,7 @@ export const Board = ({ match }) => {
   const [selectedColumn, setSelectedColumn] = useState(null);
   const [isAdd, setIsAdd] = useState(true);
   const [inEditCard, setInEditCard] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     (async function() {
@@ -41,13 +44,17 @@ export const Board = ({ match }) => {
       created: Date.now()
     };
 
-    addColumn(newColumn).then(value => {
-      if (value) {
-        newColumn['id'] = value;
-        setColumns([...columns, newColumn]);
-        setIsColumnAdd(false);
-      }
-    });
+    addColumn(newColumn)
+      .then(value => {
+        if (value) {
+          newColumn['id'] = value;
+          setColumns([...columns, newColumn]);
+          setIsColumnAdd(false);
+        }
+      })
+      .catch(error => {
+        setError(error.message);
+      });
   }
 
   function handleModalClose() {
@@ -72,7 +79,7 @@ export const Board = ({ match }) => {
         setIsCardAdd(false);
       }
     } catch (error) {
-      console.log(error);
+      setError(error.message);
     }
   }
 
@@ -88,7 +95,7 @@ export const Board = ({ match }) => {
       const card = { id: inEditCard.id, ...upCard };
       const uColumn = createDeepCopy(selectedColumn);
       const cards = selectedColumn.cards.filter(c => c.id !== inEditCard.id);
-      const newCards = [...cards, card].sort((a, b) => a.id - b.id);
+      const newCards = [...cards, card];
       uColumn.cards = newCards;
       const val = await updateColumn(selectedColumn.id, uColumn);
       if (val) {
@@ -99,41 +106,64 @@ export const Board = ({ match }) => {
         setInEditCard(null);
       }
     } catch (error) {
-      console.log(error);
+      setError(error.message);
     }
   }
 
   async function handleCardArchive(card, column) {
-    card.isArchive = true;
-    const newCards = column.cards.filter(c => c.id !== card.id);
-    const upColumn = createDeepCopy(column);
-    upColumn.cards = [...newCards, card];
-    const val = await updateColumn(column.id, upColumn);
-    if (val) {
-      afterUpdateColumn(columns, column, upColumn, setColumns);
+    try {
+      card.isArchive = true;
+      const newCards = column.cards.filter(c => c.id !== card.id);
+      const upColumn = createDeepCopy(column);
+      upColumn.cards = [...newCards, card];
+      const val = await updateColumn(column.id, upColumn);
+      if (val) {
+        afterUpdateColumn(columns, column, upColumn, setColumns);
+      }
+    } catch (error) {
+      setError(error.message);
     }
   }
 
   async function onDragDrop(ev, newColumn) {
-    const card = JSON.parse(ev.dataTransfer.getData('card'));
-    const oldColumn = JSON.parse(ev.dataTransfer.getData('columnFrom'));
-    if (oldColumn.id === newColumn.id) {
-      return;
-    }
-    oldColumn.cards = oldColumn.cards.filter(c => c.id !== card.id);
-    const val = await updateColumn(oldColumn.id, oldColumn);
-    newColumn.cards = [...newColumn.cards, card];
-    const val1 = await updateColumn(newColumn.id, newColumn);
-    if (val && val1) {
-      const newCols = columns.filter(
-        col => col.id !== oldColumn.id && col.id !== newColumn.id
-      );
-      const sortedCols = [...newCols, oldColumn, newColumn].sort(
-        (a, b) => a.created - b.created
-      );
-      setColumns(sortedCols);
+    try {
+      const card = JSON.parse(ev.dataTransfer.getData('card'));
+      const oldColumn = JSON.parse(ev.dataTransfer.getData('columnFrom'));
+      if (oldColumn.id === newColumn.id) {
+        return;
+      }
+      oldColumn.cards = oldColumn.cards.filter(c => c.id !== card.id);
+      const val = await updateColumn(oldColumn.id, oldColumn);
+      newColumn.cards = [...newColumn.cards, card];
+      const val1 = await updateColumn(newColumn.id, newColumn);
+      if (val && val1) {
+        const newCols = columns.filter(
+          col => col.id !== oldColumn.id && col.id !== newColumn.id
+        );
+        const sortedCols = [...newCols, oldColumn, newColumn].sort(
+          (a, b) => a.created - b.created
+        );
+        setColumns(sortedCols);
+      }
+    } catch (error) {
+      setError(error.message);
     }
   }
+
+  function handleDeleteColumn(column) {
+    const newCols = columns
+      .filter(c => c.id !== column.id)
+      .sort((a, b) => a.created - b.created);
+    deleteColumn(column.id)
+      .then(() => {
+        setColumns(newCols);
+      })
+      .catch(err => {
+        setError(err.message);
+      });
+  }
+
+  function handleErrorClose(e) {}
 
   return (
     <>
@@ -145,6 +175,11 @@ export const Board = ({ match }) => {
             <h2 className={commonStyles.title}>{board.name}</h2>
             <button className={commonStyles.danger}>Delete Board</button>
           </div>
+          {error && (
+            <Alert type={'error'} canClose={handleErrorClose}>
+              {error}
+            </Alert>
+          )}
           <div className={styles.ui}>
             <div className={styles.columns}>
               {columns.map(column => {
@@ -152,7 +187,10 @@ export const Board = ({ match }) => {
                   <div className={styles.column} key={column.id}>
                     <header>
                       {column.name}
-                      <div className={styles.trash}>
+                      <div
+                        className={styles.trash}
+                        onClick={() => handleDeleteColumn(column)}
+                      >
                         <i
                           className="material-icons"
                           style={{ fontSize: '25px' }}

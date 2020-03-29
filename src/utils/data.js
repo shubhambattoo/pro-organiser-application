@@ -9,7 +9,6 @@ export const getBoards = async () => {
     const boards = snapshot.docs.map(d => ({ ...d.data(), id: d.id }));
     return boards;
   } catch (error) {
-    console.error(error);
     return [];
   }
 };
@@ -26,7 +25,6 @@ export const addBoard = async (board) => {
       .add(board);
     return true;
   } catch (error) {
-    console.error(error);
     return error;
   }
 };
@@ -43,7 +41,8 @@ export const getBoard = async id => {
       .get();
     return { ...board.data(), id: board.id };
   } catch (error) {
-    console.log(error);
+    // console.log(error);
+    return error;
   }
 };
 
@@ -57,7 +56,6 @@ export const getColumns = async boardId => {
     const boards = snapshot.docs.map(d => ({ ...d.data(), id: d.id }));
     return boards;
   } catch (error) {
-    console.error(error);
     return [];
   }
 };
@@ -67,7 +65,6 @@ export const addColumn = async (column) => {
     const d = await db.collection('columns').add(column);
     return d.id;
   } catch (error) {
-    console.error(error);
     return error;
   }
 };
@@ -82,7 +79,19 @@ export const updateColumn = async (id, column) => {
     await db.collection('columns').doc(id).update(column);
     return true;
   } catch (error) {
-    console.error(error);
+    return error;
+  }
+};
+
+/**
+ * to delete column
+ * @param {string} id the id of the column
+ */
+export const deleteColumn = async (id) => {
+  try {
+    await db.collection('columns').doc(id).delete();
+    return true;
+  } catch (error) {
     return error;
   }
 };
