@@ -239,7 +239,7 @@ export const Board = ({ match, history }) => {
                     </ul>
                     <footer>
                       <button onClick={() => openAddCard(column)}>
-                        Add a Card
+                        Add a card
                       </button>
                     </footer>
                   </div>
@@ -250,7 +250,7 @@ export const Board = ({ match, history }) => {
                 onClick={() => setIsColumnAdd(true)}
                 className={styles.addButton}
               >
-                Add column
+                Add a column
               </button>
             </div>
           </div>

@@ -16,7 +16,7 @@ export const Header = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/board/create" activeClassName={styles.activeLink}>
+            <NavLink to="/createboard" activeClassName={styles.activeLink}>
               Create a board
             </NavLink>
           </li>

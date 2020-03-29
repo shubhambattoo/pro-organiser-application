@@ -11,7 +11,7 @@ function App() {
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/board/create" component={AddBoard} />
+        <Route path="/createboard" component={AddBoard} />
         <Route path="/board/:name" component={Board} />
         <Route exact path="*" component={Home} />
       </Switch>
