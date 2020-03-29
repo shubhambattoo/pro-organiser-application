@@ -245,13 +245,13 @@ export const Board = ({ match, history }) => {
                   </div>
                 );
               })}
-              <button
+              <div
                 id="CreateColumn"
                 onClick={() => setIsColumnAdd(true)}
                 className={styles.addButton}
               >
                 Add a column
-              </button>
+              </div>
             </div>
           </div>
         </div>
