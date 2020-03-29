@@ -6,7 +6,8 @@ import {
   getColumns,
   addColumn,
   updateColumn,
-  deleteColumn
+  deleteColumn,
+  deleteBoard
 } from '../../utils/data';
 import { Loader } from '../../common/loader/Loader';
 import { Card } from '../../components/card/Card';
@@ -16,7 +17,7 @@ import { createDeepCopy } from '../../utils/utility';
 import * as shortid from 'shortid';
 import { Alert } from '../../common/alert/Alert';
 
-export const Board = ({ match }) => {
+export const Board = ({ match, history }) => {
   const [loading, setLoading] = useState(true);
   const [board, setBoard] = useState({});
   const [isColumnAdd, setIsColumnAdd] = useState(false);
@@ -163,7 +164,20 @@ export const Board = ({ match }) => {
       });
   }
 
-  function handleErrorClose(e) {}
+  async function handleBoardDelete() {
+    if (window.confirm('Are you sure you want to delete the board?')) {
+      setLoading(true);
+      await Promise.all(
+        columns.map(async c => {
+          await deleteColumn(c.id);
+        })
+      );
+      const val = await deleteBoard(board.id);
+      if (val) {
+        history.push('/');
+      }
+    }
+  }
 
   return (
     <>
@@ -173,10 +187,12 @@ export const Board = ({ match }) => {
         <div className={styles.container}>
           <div className={styles.containerHeader}>
             <h2 className={commonStyles.title}>{board.name}</h2>
-            <button className={commonStyles.danger}>Delete Board</button>
+            <button className={commonStyles.danger} onClick={handleBoardDelete}>
+              Delete Board
+            </button>
           </div>
           {error && (
-            <Alert type={'error'} canClose={handleErrorClose}>
+            <Alert type={'error'} canClose={() => setError(null)}>
               {error}
             </Alert>
           )}
