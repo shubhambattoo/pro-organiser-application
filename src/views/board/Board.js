@@ -238,15 +238,14 @@ export const Board = ({ match, history }) => {
                       )}
                     </ul>
                     <footer>
-                      <button onClick={() => openAddCard(column)}>
+                      <div onClick={() => openAddCard(column)}>
                         Add a card
-                      </button>
+                      </div>
                     </footer>
                   </div>
                 );
               })}
               <button
-                id="CreateColumn"
                 className={styles.addButton}
                 onClick={() => setIsColumnAdd(true)}
               >

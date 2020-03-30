@@ -141,7 +141,7 @@ export const AddCard = ({
         </div>
         <div className={styles.formField}>
           {isAdd ? (
-            <button className={commonStyles.info} onClick={onAdd}>
+            <button className={commonStyles.info} id="CreateCard" onClick={onAdd}>
               Add Card
             </button>
           ) : (
