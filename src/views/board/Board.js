@@ -237,11 +237,11 @@ export const Board = ({ match, history }) => {
                           )
                       )}
                     </ul>
-                    <footer>
-                      <div onClick={() => openAddCard(column)}>
+                    {/* <footer> */}
+                      <div className={styles.add} onClick={() => openAddCard(column)}>
                         Add a card
                       </div>
-                    </footer>
+                    {/* </footer> */}
                   </div>
                 );
               })}

@@ -69,7 +69,7 @@
   color: #888;
 }
 
-.column footer button {
+.column footer div, .column div.add {
   cursor: pointer;
   border: 1px solid gray;
   background-color: #fff;
