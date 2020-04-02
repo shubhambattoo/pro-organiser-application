@@ -1,0 +1,50 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 350px;
+  margin: 75px auto;
+}
+
+.formHeader {
+  font-size: 30px;
+  font-weight: 500;
+	padding: 15px 0 30px;
+	text-align: center;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+  display: flex;
+	flex-direction: column;
+	color: #222;
+}
+
+.formGroup label {
+  display: block;
+	margin-bottom: 8px;
+	font-size: 18px;
+	font-weight: 500;
+}
+
+.formGroup input {
+  width: 100%;
+  border: 1px solid #a8a8a8;
+  padding: 10px 12px;
+  border-radius: 4px;
+}
+
+.formGroup input:focus {
+	outline-color: #07787c;
+}
+
+.meta {
+	font-size: 14px;
+	color: #222;
+	text-transform: capitalize;
+	text-align: center;
+}
+
+.meta a {
+	color: #07787c;
+	text-decoration: none;
+}

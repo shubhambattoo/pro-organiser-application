@@ -1,16 +1,19 @@
 import React, { useState, useContext } from 'react';
-import styles from './Login.module.css';
+import styles from './../../common/styles/formStyles.module.css';
+import commonStyle from './../../common/styles/styles.module.css';
 import { firebaseApp } from '../../firebase/init';
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter, Redirect, Link } from 'react-router-dom';
 import { AuthContext } from '../../context/Auth';
+import { Alert } from '../../common/alert/Alert';
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
   function handleLogin() {
     if (!email || !password) {
-      return alert('All fields are required');
+      return setError('All fields are required');
     }
 
     firebaseApp
@@ -31,9 +34,10 @@ const Login = ({ history }) => {
   }
 
   return (
-    <div>
-      <h1>Login Now</h1>
-      <div>
+    <div className={styles.formContainer}>
+      <div className={styles.formHeader}>Login</div>
+      {error && <Alert> {error} </Alert>}
+      <div className={styles.formGroup}>
         <label htmlFor="email">Email</label>
         <input
           type="email"
@@ -41,9 +45,10 @@ const Login = ({ history }) => {
           id="email"
           value={email}
           onChange={e => setEmail(e.target.value)}
+          placeholder='mail@example.com'
         />
       </div>
-      <div>
+      <div className={styles.formGroup}>
         <label htmlFor="password">Password</label>
         <input
           type="password"
@@ -51,10 +56,14 @@ const Login = ({ history }) => {
           id="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
+          placeholder='******'
         />
       </div>
-      <div>
-        <button onClick={handleLogin}>Sign In</button>
+      <div className={styles.formGroup}>
+        <button className={commonStyle.info} onClick={handleLogin}>Login</button>
+      </div>
+      <div className={styles.meta}>
+        Dont have an account? <Link to="/signup">Sign up</Link>.
       </div>
     </div>
   );
