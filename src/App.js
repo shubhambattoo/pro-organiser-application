@@ -8,7 +8,6 @@ import SignUp from './views/signUp/SignUp';
 import Login from './views/login/Login';
 import { AuthProvider } from './context/Auth';
 import PrivateRoute from './common/guards/PrivateRoute';
-import { firebaseApp } from './firebase/init';
 
 function App() {
   return (
