@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import commonStyles from './../../common/styles/styles.module.css';
 import styles from './AddBoard.module.css';
 import { addBoard } from '../../utils/data';
 import { Alert } from '../../common/alert/Alert';
+import { AuthContext } from '../../context/Auth';
 
 export const AddBoard = ({ history }) => {
+  const { currentUser } = useContext(AuthContext);
   const [name, setName] = useState('');
   const [teamMember, setTeamMember] = useState('');
   const [type, setType] = useState('');
@@ -15,23 +17,24 @@ export const AddBoard = ({ history }) => {
       return setError('Name and Team Members are required fields');
     }
 
-    const teamMembers = teamMember.split(',');
+    const teamMembers = teamMember.split(',').map((el) => el.trim());
 
     const newBoard = {
+      user: currentUser.email,
       name,
       teamMembers,
-      type
+      type,
     };
 
     addBoard(newBoard)
-      .then(created => {
+      .then((created) => {
         if (created) {
           history.push('/');
         } else {
           setError('Could not add Board');
         }
       })
-      .catch(err => {
+      .catch((err) => {
         setError('Could not add Board. Some error occured.');
       });
   };
@@ -56,7 +59,7 @@ export const AddBoard = ({ history }) => {
           type="text"
           name="name"
           value={name}
-          onChange={e => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
           id="name"
           placeholder="eg. Agile Sprint Board"
         />
@@ -68,7 +71,7 @@ export const AddBoard = ({ history }) => {
           name="team"
           id="team"
           value={teamMember}
-          onChange={e => setTeamMember(e.target.value)}
+          onChange={(e) => setTeamMember(e.target.value)}
           placeholder="Add your team members(separated by commas)"
         />
       </div>
@@ -79,7 +82,7 @@ export const AddBoard = ({ history }) => {
           name="type"
           id="type"
           value={type}
-          onChange={e => setType(e.target.value)}
+          onChange={(e) => setType(e.target.value)}
           placeholder="eg. Design UX"
         />
       </div>

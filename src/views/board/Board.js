@@ -7,7 +7,7 @@ import {
   addColumn,
   updateColumn,
   deleteColumn,
-  deleteBoard
+  deleteBoard,
 } from '../../utils/data';
 import { Loader } from '../../common/loader/Loader';
 import { Card } from '../../components/card/Card';
@@ -29,7 +29,7 @@ export const Board = ({ match, history }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    (async function() {
+    (async function () {
       const data = await getBoard(match.params.name);
       setBoard(data);
       await getAllColumns(data.id, setColumns);
@@ -42,18 +42,18 @@ export const Board = ({ match, history }) => {
       boardId: board.id,
       name: columnName,
       cards: [],
-      created: Date.now()
+      created: Date.now(),
     };
 
     addColumn(newColumn)
-      .then(value => {
+      .then((value) => {
         if (value) {
           newColumn['id'] = value;
           setColumns([...columns, newColumn]);
           setIsColumnAdd(false);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         setError(error.message);
       });
   }
@@ -95,7 +95,7 @@ export const Board = ({ match, history }) => {
     try {
       const card = { id: inEditCard.id, ...upCard };
       const uColumn = createDeepCopy(selectedColumn);
-      const cards = selectedColumn.cards.filter(c => c.id !== inEditCard.id);
+      const cards = selectedColumn.cards.filter((c) => c.id !== inEditCard.id);
       const newCards = [...cards, card];
       uColumn.cards = newCards;
       const val = await updateColumn(selectedColumn.id, uColumn);
@@ -114,7 +114,7 @@ export const Board = ({ match, history }) => {
   async function handleCardArchive(card, column) {
     try {
       card.isArchive = true;
-      const newCards = column.cards.filter(c => c.id !== card.id);
+      const newCards = column.cards.filter((c) => c.id !== card.id);
       const upColumn = createDeepCopy(column);
       upColumn.cards = [...newCards, card];
       const val = await updateColumn(column.id, upColumn);
@@ -133,13 +133,13 @@ export const Board = ({ match, history }) => {
       if (oldColumn.id === newColumn.id) {
         return;
       }
-      oldColumn.cards = oldColumn.cards.filter(c => c.id !== card.id);
+      oldColumn.cards = oldColumn.cards.filter((c) => c.id !== card.id);
       const val = await updateColumn(oldColumn.id, oldColumn);
       newColumn.cards = [...newColumn.cards, card];
       const val1 = await updateColumn(newColumn.id, newColumn);
       if (val && val1) {
         const newCols = columns.filter(
-          col => col.id !== oldColumn.id && col.id !== newColumn.id
+          (col) => col.id !== oldColumn.id && col.id !== newColumn.id
         );
         const sortedCols = [...newCols, oldColumn, newColumn].sort(
           (a, b) => a.created - b.created
@@ -153,13 +153,13 @@ export const Board = ({ match, history }) => {
 
   function handleDeleteColumn(column) {
     const newCols = columns
-      .filter(c => c.id !== column.id)
+      .filter((c) => c.id !== column.id)
       .sort((a, b) => a.created - b.created);
     deleteColumn(column.id)
       .then(() => {
         setColumns(newCols);
       })
-      .catch(err => {
+      .catch((err) => {
         setError(err.message);
       });
   }
@@ -168,7 +168,7 @@ export const Board = ({ match, history }) => {
     if (window.confirm('Are you sure you want to delete the board?')) {
       setLoading(true);
       await Promise.all(
-        columns.map(async c => {
+        columns.map(async (c) => {
           await deleteColumn(c.id);
         })
       );
@@ -198,9 +198,16 @@ export const Board = ({ match, history }) => {
           )}
           <div className={styles.ui}>
             <div className={styles.columns}>
-              {columns.map(column => {
+              {columns.map((column) => {
                 return (
-                  <div className={styles.column} key={column.id}>
+                  <div
+                    className={styles.column}
+                    key={column.id}
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => {
+                      onDragDrop(e, column);
+                    }}
+                  >
                     <header>
                       {column.name}
                       <div
@@ -215,14 +222,9 @@ export const Board = ({ match, history }) => {
                         </i>
                       </div>
                     </header>
-                    <ul
-                      onDragOver={e => e.preventDefault()}
-                      onDrop={e => {
-                        onDragDrop(e, column);
-                      }}
-                    >
+                    <ul>
                       {column.cards.map(
-                        card =>
+                        (card) =>
                           !card.isArchive && (
                             <Card
                               card={card}
@@ -238,7 +240,10 @@ export const Board = ({ match, history }) => {
                       )}
                     </ul>
                     <footer>
-                      <div className={styles.add} onClick={() => openAddCard(column)}>
+                      <div
+                        className={styles.add}
+                        onClick={() => openAddCard(column)}
+                      >
                         Add a card
                       </div>
                     </footer>
@@ -273,7 +278,7 @@ export const Board = ({ match, history }) => {
 };
 
 function afterUpdateColumn(columns, selectedColumn, upColumn, setColumns) {
-  const filColumns = columns.filter(cl => cl.id !== selectedColumn.id);
+  const filColumns = columns.filter((cl) => cl.id !== selectedColumn.id);
   const newColumns = [...filColumns, upColumn];
   newColumns.sort((a, b) => a.created - b.created);
   setColumns(newColumns);
