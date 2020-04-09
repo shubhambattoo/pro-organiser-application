@@ -7,14 +7,15 @@
 }
 
 .nav {
-  composes: container from '../../common/styles/styles.module.css' ;
+  composes: container from '../../common/styles/styles.module.css';
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
 .brand {
-	font-size: 24px;
+  font-size: 24px;
   font-weight: 400;
   text-transform: capitalize;
 }
@@ -36,21 +37,48 @@
 }
 
 .menu li {
-	text-transform: uppercase;
+  text-transform: uppercase;
   font-size: 15px;
   font-weight: 500;
 }
 
-.menu li a {
-	display: inline-block;
-	padding: 20px 10px;
+.menu li a,
+.dropdown {
+  display: inline-block;
+  padding: 20px 10px;
   text-decoration: none;
-	color: #222;
-	transition: background-color .2s;
-	outline: none;
+  color: #222;
+  transition: background-color 0.2s;
+  outline: none;
 }
 
 .activeLink {
-	color: #111;
+  color: #111;
   background-color: rgba(255, 255, 255, 0.253);
+}
+
+.dropdown {
+  cursor: pointer;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 55px;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(0, 0, 0, .6);
+}
+
+.dropdownItem {
+  padding: 10px 30px;
+  font-size: 15px;
+  color: #222;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: background-color .2s;
+  font-weight: 500;
+}
+
+.dropdownItem:hover {
+  background-color: #dbdbdb;
 }

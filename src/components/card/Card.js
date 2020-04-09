@@ -60,8 +60,6 @@ export const Card = ({ card, board, hanldeEdit, hanldeArchive, column }) => {
   );
 
   function dragStart(ev, card) {
-    // console.log(ev)
-    // console.log(card);
     ev.dataTransfer.setData("card", JSON.stringify(card));
     ev.dataTransfer.setData("columnFrom", JSON.stringify(column));
   }
