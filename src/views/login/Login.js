@@ -22,9 +22,13 @@ const Login = ({ history }) => {
       .then(() => {
         history.push('/');
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
+  }
+
+  function handleAlertClose() {
+    setError('');
   }
 
   const { currentUser } = useContext(AuthContext);
@@ -36,7 +40,11 @@ const Login = ({ history }) => {
   return (
     <div className={styles.formContainer}>
       <div className={styles.formHeader}>Login</div>
-      {error && <Alert> {error} </Alert>}
+      {error && (
+        <Alert type="error" canClose={handleAlertClose}>
+          {error}
+        </Alert>
+      )}
       <div className={styles.formGroup}>
         <label htmlFor="email">Email</label>
         <input
@@ -44,8 +52,8 @@ const Login = ({ history }) => {
           name="email"
           id="email"
           value={email}
-          onChange={e => setEmail(e.target.value)}
-          placeholder='mail@example.com'
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="mail@example.com"
         />
       </div>
       <div className={styles.formGroup}>
@@ -55,12 +63,14 @@ const Login = ({ history }) => {
           name="password"
           id="password"
           value={password}
-          onChange={e => setPassword(e.target.value)}
-          placeholder='******'
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="******"
         />
       </div>
       <div className={styles.formGroup}>
-        <button className={commonStyle.info} onClick={handleLogin}>Login</button>
+        <button className={commonStyle.info} onClick={handleLogin}>
+          Login
+        </button>
       </div>
       <div className={styles.meta}>
         Dont have an account? <Link to="/signup">Sign up</Link>.

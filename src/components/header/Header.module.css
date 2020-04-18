@@ -59,6 +59,7 @@
 
 .dropdown {
   cursor: pointer;
+  text-transform: lowercase !important;
 }
 
 .dropdownMenu {

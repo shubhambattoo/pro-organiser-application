@@ -24,7 +24,7 @@ export const Header = () => {
           <NavLink to="/">Pro Organiser</NavLink>
         </div>
         <ul className={styles.menu}>
-          {currentUser && currentUser.displayName ? (
+          {currentUser ? (
             <>
               <li>
                 <NavLink exact activeClassName={styles.activeLink} to="/">
@@ -37,7 +37,7 @@ export const Header = () => {
                 </NavLink>
               </li>
               <li className={styles.dropdown} onClick={toggleDropdown}>
-                {currentUser.displayName}
+                {currentUser.email}
               </li>
             </>
           ) : (

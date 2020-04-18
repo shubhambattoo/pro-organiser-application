@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styles from '../../common/styles/formStyles.module.css';
 import commonStyle from '../../common/styles/styles.module.css';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, Link, Redirect } from 'react-router-dom';
 import { firebaseApp } from '../../firebase/init';
 import { Alert } from '../../common/alert/Alert';
+import { AuthContext } from '../../context/Auth';
 
 const SignUp = ({ history }) => {
   const [name, setName] = useState('');
@@ -13,7 +14,7 @@ const SignUp = ({ history }) => {
 
   function handleSignUp() {
     if (!email || !password || !name) {
-      return alert('All fields are required');
+      return setError('All fields are required');
     }
 
     firebaseApp
@@ -35,10 +36,24 @@ const SignUp = ({ history }) => {
       });
   }
 
+  function handleAlertClose() {
+    setError('');
+  }
+
+  const { currentUser } = useContext(AuthContext);
+
+  if (currentUser) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <div className={styles.formContainer}>
       <div className={styles.formHeader}>Getting started</div>
-      {error && <Alert> {error} </Alert>}
+      {error && (
+        <Alert type="error" canClose={handleAlertClose}>
+          {error}
+        </Alert>
+      )}
       <div className={styles.formGroup}>
         <label htmlFor="name">Name</label>
         <input
