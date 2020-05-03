@@ -27,3 +27,9 @@
   display: block;
   margin-bottom: 10px;
 }
+
+@media screen and (max-width: 1024px) {
+  .container {
+    padding: 15px 15px 30px;
+  }
+}

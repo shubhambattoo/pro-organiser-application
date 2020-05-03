@@ -20,11 +20,11 @@
   background-color: #f3fcfa;
   color: #333;
   border-radius: 4px;
-  transition: transform .3s, box-shadow .3s;
+  transition: transform 0.3s, box-shadow 0.3s;
   text-transform: capitalize;
 }
 
-.board:hover{
+.board:hover {
   transform: scale(1.02) translateY(-10px);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
@@ -33,8 +33,20 @@
   font-size: 20px;
 }
 
-@media screen and (max-width:900px) {
+@media screen and (max-width: 1024px) {
   .container {
     padding: 15px 15px 30px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .boards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .boards {
+    grid-template-columns: 1fr;
   }
 }

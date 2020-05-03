@@ -22,6 +22,19 @@
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
 }
 
+@media screen and (max-width: 768px) {
+  .modal {
+    min-width: unset;
+    width: 500px;
+  }
+}
+
+@media screen and (max-width: 499px) {
+  .modal {
+    width: 340px;
+  }
+}
+
 /* .close {
   position: absolute;
   top: 25%;

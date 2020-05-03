@@ -67,7 +67,7 @@
   top: 55px;
   right: 0;
   background-color: #fff;
-  box-shadow: 0 0 8px rgba(0, 0, 0, .6);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
 }
 
 .dropdownItem {
@@ -76,10 +76,46 @@
   color: #222;
   text-transform: capitalize;
   cursor: pointer;
-  transition: background-color .2s;
+  transition: background-color 0.2s;
   font-weight: 500;
 }
 
 .dropdownItem:hover {
   background-color: #dbdbdb;
+}
+
+@media screen and (max-width: 576px) {
+  .menu {
+    flex-direction: column;
+    padding: 10px 0;
+  }
+
+  .menu li {
+    font-size: 14px;
+  }
+
+  .menu li a,
+  .dropdown {
+    padding: 10px;
+  }
+
+  .menu li:not(:last-child) {
+    margin-right: 0;
+  }
+
+  .brand {
+    padding: 10px 0 0;
+  }
+
+  .dropdownMenu {
+    top: 130px;
+    right: 50px;
+  }
+  
+}
+
+@media screen and (max-width: 380px) {
+  .brand {
+    font-size: 22px;
+  }
 }

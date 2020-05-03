@@ -9,7 +9,7 @@
   align-items: center;
 }
 
-.containerHeader button{
+.containerHeader button {
   font-size: 15px;
 }
 
@@ -111,8 +111,14 @@
   font-weight: 400;
 }
 
-@media screen and (max-width:900px) {
+@media screen and (max-width: 900px) {
   .container {
     padding: 15px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .ui {
+    height: calc(100vh - 195px);
   }
 }

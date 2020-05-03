@@ -51,3 +51,14 @@
 .action button {
   font-size: 15px;
 }
+
+@media screen and (max-width: 768px) {
+  .field {
+    flex-direction: column;
+  }
+
+  .field label {
+    align-self: flex-start;
+    margin-bottom: 10px;
+  }
+}

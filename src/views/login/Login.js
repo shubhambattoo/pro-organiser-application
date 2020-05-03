@@ -10,17 +10,20 @@ const Login = ({ history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [isLogging, setIsLogging] = useState(false);
 
   function handleLogin() {
     if (!email || !password) {
       return setError('All fields are required');
     }
+    setIsLogging(true);
 
     firebaseApp
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         history.push('/');
+        setIsLogging(false);
       })
       .catch((err) => {
         console.log(err);
@@ -68,7 +71,11 @@ const Login = ({ history }) => {
         />
       </div>
       <div className={styles.formGroup}>
-        <button className={commonStyle.info} onClick={handleLogin}>
+        <button
+          className={commonStyle.info}
+          disabled={isLogging}
+          onClick={handleLogin}
+        >
           Login
         </button>
       </div>
