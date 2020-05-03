@@ -2,7 +2,7 @@
 
 Trello like collaboration Web APP made using React, react hooks, context api, and using Firebase as a Database.
 
-## [Live Preview](https://pro-organisers.firebaseapp.com)
+## [Live Preview](https://pro-organisers.web.app)
 
 ## Screens
 
