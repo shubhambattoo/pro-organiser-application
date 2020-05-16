@@ -22,11 +22,12 @@ const Login = ({ history }) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        history.push('/');
         setIsLogging(false);
+        history.push('/');
       })
       .catch((err) => {
-        console.log(err);
+        setError('Something wrong with your email or Password. Try again!');
+        setIsLogging(false);
       });
   }
 
