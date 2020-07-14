@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import styles from './Header.module.css';
 import { AuthContext } from '../../context/Auth';
 import { firebaseApp } from '../../firebase/init';
 
 export const Header = () => {
   const { currentUser } = useContext(AuthContext);
+  const history = useHistory();
   const [isDropdown, setIsDropdown] = useState(false);
-
   function toggleDropdown() {
     setIsDropdown(!isDropdown);
   }
@@ -17,11 +17,17 @@ export const Header = () => {
     setIsDropdown(false);
   }
 
+  if (history.location.pathname === '/') {
+    return <></>;
+  }
+
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
         <div className={styles.brand}>
-          <NavLink to="/">Pro Organiser</NavLink>
+          <NavLink to="/">
+            ProOrganiser
+          </NavLink>
         </div>
         <ul className={styles.menu}>
           {currentUser ? (

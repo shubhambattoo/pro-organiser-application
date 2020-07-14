@@ -34,13 +34,14 @@
   border-radius: 4px;
   font-size: 16px;
   text-transform: capitalize;
+  text-decoration: none;
 }
 
 .info {
   composes: btn;
   background-color: #27a6aa;
   color: #fff;
-  transition: background-color .2s;
+  transition: background-color 0.2s;
 }
 
 .info:hover {
@@ -53,7 +54,7 @@
   color: #fff;
 }
 
-@media screen and (max-width:900px) {
+@media screen and (max-width: 900px) {
   .container {
     padding: 0 15px;
   }
