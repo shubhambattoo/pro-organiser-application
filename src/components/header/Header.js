@@ -25,7 +25,7 @@ export const Header = () => {
     <header className={styles.header}>
       <nav className={styles.nav}>
         <div className={styles.brand}>
-          <NavLink to="/">
+          <NavLink to="/app">
             Pro Organiser
           </NavLink>
         </div>
