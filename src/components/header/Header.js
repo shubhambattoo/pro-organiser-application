@@ -26,7 +26,7 @@ export const Header = () => {
       <nav className={styles.nav}>
         <div className={styles.brand}>
           <NavLink to="/">
-            ProOrganiser
+            Pro Organiser
           </NavLink>
         </div>
         <ul className={styles.menu}>

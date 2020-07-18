@@ -22,7 +22,7 @@ function App() {
           <PrivateRoute path="/board/:name" component={Board} />
           <Route path="/signup" component={SignUp} />
           <Route path="/login" component={Login} />
-          <Route exact path="*" render={() => <Redirect to='/app' />} />
+          <Route path="*" render={() => <Redirect to='/app' />} />
         </Switch>
       </Router>
     </AuthProvider>
