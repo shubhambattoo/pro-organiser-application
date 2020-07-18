@@ -23,7 +23,7 @@ const Login = ({ history }) => {
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         setIsLogging(false);
-        history.push('/');
+        history.push('/app');
       })
       .catch((err) => {
         setError('Something wrong with your email or Password. Try again!');
@@ -38,7 +38,7 @@ const Login = ({ history }) => {
   const { currentUser } = useContext(AuthContext);
 
   if (currentUser) {
-    return <Redirect to="/" />;
+    return <Redirect to="/app" />;
   }
 
   return (
