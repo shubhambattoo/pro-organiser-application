@@ -33,7 +33,7 @@ export const Header = () => {
           {currentUser ? (
             <>
               <li>
-                <NavLink exact activeClassName={styles.activeLink} to="/">
+                <NavLink exact activeClassName={styles.activeLink} to="/app">
                   Home
                 </NavLink>
               </li>
