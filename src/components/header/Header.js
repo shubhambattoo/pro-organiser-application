@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styles from './Header.module.css';
 import { AuthContext } from '../../context/Auth';
 import { firebaseApp } from '../../firebase/init';
@@ -20,15 +20,13 @@ export const Header = () => {
     <header className={styles.header}>
       <nav className={styles.nav}>
         <div className={styles.brand}>
-          <NavLink to="/app">
-            Pro Organiser
-          </NavLink>
+          <NavLink to="/">Pro Organiser</NavLink>
         </div>
         <ul className={styles.menu}>
           {currentUser ? (
             <>
               <li>
-                <NavLink exact activeClassName={styles.activeLink} to="/app">
+                <NavLink exact activeClassName={styles.activeLink} to="/">
                   Home
                 </NavLink>
               </li>

@@ -25,7 +25,7 @@ const SignUp = ({ history }) => {
         user
           .updateProfile({ displayName: name })
           .then(() => {
-            history.push('/app');
+            history.push('/');
           })
           .catch((err) => {
             throw Error(err);
@@ -43,7 +43,7 @@ const SignUp = ({ history }) => {
   const { currentUser } = useContext(AuthContext);
 
   if (currentUser) {
-    return <Redirect to="/app" />;
+    return <Redirect to="/" />;
   }
 
   return (
