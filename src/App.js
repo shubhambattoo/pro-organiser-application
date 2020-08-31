@@ -8,7 +8,6 @@ import SignUp from './views/signUp/SignUp';
 import Login from './views/login/Login';
 import { AuthProvider } from './context/Auth';
 import PrivateRoute from './common/guards/PrivateRoute';
-import Main from './views/main/Main';
 
 function App() {
   return (
@@ -16,13 +15,12 @@ function App() {
       <Router>
         <Header />
         <Switch>
-          <Route path="/" exact component={Main} />
-          <PrivateRoute exact path="/app" component={Home} />
+          <PrivateRoute exact path="/" component={Home} />
           <PrivateRoute path="/createboard" component={AddBoard} />
           <PrivateRoute path="/board/:name" component={Board} />
           <Route path="/signup" component={SignUp} />
           <Route path="/login" component={Login} />
-          <Route path="*" render={() => <Redirect to='/app' />} />
+          <Route path="*" render={() => <Redirect to='/' />} />
         </Switch>
       </Router>
     </AuthProvider>

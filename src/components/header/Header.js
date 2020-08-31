@@ -6,7 +6,6 @@ import { firebaseApp } from '../../firebase/init';
 
 export const Header = () => {
   const { currentUser } = useContext(AuthContext);
-  const history = useHistory();
   const [isDropdown, setIsDropdown] = useState(false);
   function toggleDropdown() {
     setIsDropdown(!isDropdown);
@@ -15,10 +14,6 @@ export const Header = () => {
   async function handleLogout() {
     await firebaseApp.auth().signOut();
     setIsDropdown(false);
-  }
-
-  if (history.location.pathname === '/') {
-    return <></>;
   }
 
   return (
