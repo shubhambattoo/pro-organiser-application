@@ -77,7 +77,7 @@ const Login = ({ history }) => {
           disabled={isLogging}
           onClick={handleLogin}
         >
-          Login
+          {isLogging ? 'Logging in..' : 'Login'}
         </button>
       </div>
       <div className={styles.meta}>

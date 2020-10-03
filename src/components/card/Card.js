@@ -4,10 +4,13 @@ import commonStyles from './../../common/styles/styles.module.css';
 import { Team } from '../team-tags/Team';
 import { Modal } from '../../common/modal/Modal';
 import { convertDateToNice } from '../../utils/utility';
+import ReactMarkdown from 'react-markdown';
 
 export const Card = ({ card, board, hanldeEdit, hanldeArchive, column }) => {
   const [isDetails, setIsDetails] = useState(false);
-  const members = card.teamMembers.map(name => <Team name={name} key={name} />);
+  const members = card.teamMembers.map((name) => (
+    <Team name={name} key={name} />
+  ));
   const date = new Date(card.date);
   const dueDate = convertDateToNice(date);
 
@@ -43,32 +46,33 @@ export const Card = ({ card, board, hanldeEdit, hanldeArchive, column }) => {
         </div>
       </div>
       <div className={styles.modalBody}>
-        <div className={styles.det}>
-          <header>Description</header>
-          <div>{card.description}</div>
+        <div className={styles.bodyRow}>
+          <div className={styles.det}>
+            <header>Assignee(s)</header>
+            <div className={styles.detTeam}>{members}</div>
+          </div>
+          <div className={styles.det}>
+            <header>Due Date</header>
+            <div>{dueDate}</div>
+          </div>
         </div>
-        <div className={styles.det}>
-          <header>Members</header>
-          <div className={styles.detTeam}>{members}</div>
-        </div>
-        <div className={styles.det}>
-          <header>Due Date</header>
-          <div>{dueDate}</div>
+        <div className={styles.md}>
+          <ReactMarkdown source={card.description} className="markdown" />
         </div>
       </div>
     </Modal>
   );
 
   function dragStart(ev, card) {
-    ev.dataTransfer.setData("card", JSON.stringify(card));
-    ev.dataTransfer.setData("columnFrom", JSON.stringify(column));
+    ev.dataTransfer.setData('card', JSON.stringify(card));
+    ev.dataTransfer.setData('columnFrom', JSON.stringify(column));
   }
 
   return (
     <>
       <li
         className={styles.item}
-        onDragStart={e => dragStart(e, card)}
+        onDragStart={(e) => dragStart(e, card)}
         draggable
         onClick={() => setIsDetails(true)}
       >
