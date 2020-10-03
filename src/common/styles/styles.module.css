@@ -37,6 +37,11 @@
   text-decoration: none;
 }
 
+.btn:disabled {
+  pointer-events: none;
+  opacity: .6;
+}
+
 .info {
   composes: btn;
   background-color: #27a6aa;

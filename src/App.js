@@ -8,6 +8,7 @@ import SignUp from './views/signUp/SignUp';
 import Login from './views/login/Login';
 import { AuthProvider } from './context/Auth';
 import PrivateRoute from './common/guards/PrivateRoute';
+import './common/styles/markdown.scss';
 
 function App() {
   return (

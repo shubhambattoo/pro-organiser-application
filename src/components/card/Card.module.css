@@ -26,6 +26,7 @@
   margin-bottom: 10px;
 }
 
+/* Details Modal */
 .modalHeader {
   position: relative;
   display: flex;
@@ -65,9 +66,9 @@
 }
 
 .btnGroup {
-	align-self: center;
-	display: flex;
-	justify-content: flex-end;
+  align-self: center;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .btnGroup button {
@@ -80,9 +81,18 @@
 
 .modalBody {
   padding: 20px 0;
+  max-height: 400px;
+  overflow-y: auto;
+  scrollbar-width: thin;
 }
 
-.det {
+.bodyRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.det,
+.md {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -92,8 +102,9 @@
   margin-bottom: 20px;
 }
 
-.det header {
-  font-size: 18px;
+.det header,
+.md header {
+  font-size: 16px;
   line-height: 1;
   font-weight: 400;
   text-transform: capitalize;
@@ -109,7 +120,7 @@
   display: flex;
 }
 
-@media screen and (max-width:360px) {
+@media screen and (max-width: 360px) {
   .modalClose {
     right: -10px;
   }
