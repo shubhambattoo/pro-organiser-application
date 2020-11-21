@@ -18,6 +18,15 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
+        env:
+          REACT_APP_APIKEY: ${{ secrets.FIREBASE_APIKEY }}
+          REACT_APP_messagingSenderId: ${{ secrets.FIREBASE_MESSAGINGSENDERID }}
+          REACT_APP_appId: ${{ secrets.FIREBASE_APPID }}
+          REACT_APP_measurementId: ${{ secrets.FIREBASE_MEASUREMENTID }}
+          REACT_APP_DBURL: ${{ secrets.FIREBASE_DBURL }}
+          REACT_APP_storageBucket: ${{ secrets.FIREBASE_STORAGEBUCKET }}
+          REACT_APP_authDomain: ${{ secrets.FIREBASE_AUTHDOMAIN }}
+          REACT_APP_projectId: ${{ secrets.FIREBASE_PROJECTID }}
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
