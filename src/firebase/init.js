@@ -1,8 +1,9 @@
 /* eslint-disable */
-import firebase from 'firebase/app';
-import firestore from 'firebase/firestore';
-import auth from 'firebase/auth';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import 'firebase/compat/auth';
 
+let firebaseApp;
 const config = {
   apiKey: process.env.REACT_APP_APIKEY,
   authDomain: process.env.REACT_APP_authDomain,
@@ -14,7 +15,12 @@ const config = {
   measurementId: process.env.REACT_APP_measurementId,
 };
 
-export const firebaseApp = firebase.initializeApp(config);
+// if a Firebase instance doesn't exist, create one
+if (!firebase.apps.length) {
+  firebaseApp = firebase.initializeApp(config);
+}
+
+export { firebaseApp };
 
 // export the firestore db
 export default firebaseApp.firestore();
