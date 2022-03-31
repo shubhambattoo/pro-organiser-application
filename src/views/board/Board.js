@@ -14,7 +14,7 @@ import { Card } from '../../components/card/Card';
 import { AddCard } from '../../components/add-card/AddCard';
 import { AddColumn } from '../../components/add-column/AddColumn';
 import { createDeepCopy } from '../../utils/utility';
-import * as shortid from 'shortid';
+import { nanoid } from 'nanoid'
 import { Alert } from '../../common/alert/Alert';
 
 export const Board = ({ match, history }) => {
@@ -70,7 +70,7 @@ export const Board = ({ match, history }) => {
 
   async function addCard(card) {
     try {
-      card['id'] = shortid();
+      card['id'] = nanoid();
       const cards = [...selectedColumn.cards, card];
       const uColumn = createDeepCopy(selectedColumn);
       uColumn.cards = cards;
