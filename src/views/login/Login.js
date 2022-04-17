@@ -2,15 +2,16 @@ import React, { useState, useContext } from 'react';
 import styles from './../../common/styles/formStyles.module.css';
 import commonStyle from './../../common/styles/styles.module.css';
 import { firebaseApp } from '../../firebase/init';
-import { withRouter, Redirect, Link } from 'react-router-dom';
+import { Navigate, Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/Auth';
 import { Alert } from '../../common/alert/Alert';
 
-const Login = ({ history }) => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [isLogging, setIsLogging] = useState(false);
+  let navigate = useNavigate();
 
   function handleLogin() {
     if (!email || !password) {
@@ -23,7 +24,7 @@ const Login = ({ history }) => {
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         setIsLogging(false);
-        history.push('/');
+        navigate('/');
       })
       .catch((err) => {
         setError('Something wrong with your email or Password. Try again!');
@@ -38,7 +39,7 @@ const Login = ({ history }) => {
   const { currentUser } = useContext(AuthContext);
 
   if (currentUser) {
-    return <Redirect to="/" />;
+    return <Navigate to="/" />;
   }
 
   return (
@@ -87,4 +88,4 @@ const Login = ({ history }) => {
   );
 };
 
-export default withRouter(Login);
+export default Login;

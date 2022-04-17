@@ -4,13 +4,15 @@ import styles from './AddBoard.module.css';
 import { addBoard } from '../../utils/data';
 import { Alert } from '../../common/alert/Alert';
 import { AuthContext } from '../../context/Auth';
+import { useNavigate } from 'react-router-dom';
 
-export const AddBoard = ({ history }) => {
+export const AddBoard = () => {
   const { currentUser } = useContext(AuthContext);
   const [name, setName] = useState('');
   const [teamMember, setTeamMember] = useState('');
   const [type, setType] = useState('');
   const [error, setError] = useState('');
+  let navigate = useNavigate();
 
   const saveBoard = () => {
     if (!name && !teamMember) {
@@ -29,7 +31,7 @@ export const AddBoard = ({ history }) => {
     addBoard(newBoard)
       .then((created) => {
         if (created) {
-          history.push('/');
+          navigate('/');
         } else {
           setError('Could not add Board');
         }

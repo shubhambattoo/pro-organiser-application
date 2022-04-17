@@ -1,8 +1,25 @@
 import React, { useContext, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, useMatch, useResolvedPath } from 'react-router-dom';
 import styles from './Header.module.css';
 import { AuthContext } from '../../context/Auth';
 import { firebaseApp } from '../../firebase/init';
+
+function NavLink({ children, to, ...props }) {
+  let resolved = useResolvedPath(to);
+  let match = useMatch({ path: resolved.pathname, end: true });
+
+  return (
+    <div>
+      <Link
+        className={match ? styles.activeLink : styles.link}
+        to={to}
+        {...props}
+      >
+        {children}
+      </Link>
+    </div>
+  );
+}
 
 export const Header = () => {
   const { currentUser } = useContext(AuthContext);
@@ -20,20 +37,18 @@ export const Header = () => {
     <header className={styles.header}>
       <nav className={styles.nav}>
         <div className={styles.brand}>
-          <NavLink to="/">Pro Organiser</NavLink>
+          <Link to="/">Pro Organiser</Link>
         </div>
         <ul className={styles.menu}>
           {currentUser ? (
             <>
               <li>
-                <NavLink exact activeClassName={styles.activeLink} to="/">
+                <NavLink to="/">
                   Home
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/createboard" activeClassName={styles.activeLink}>
-                  Create a board
-                </NavLink>
+                <NavLink to="/createboard">Create a board</NavLink>
               </li>
               <li className={styles.dropdown} onClick={toggleDropdown}>
                 {currentUser.email}
@@ -42,14 +57,10 @@ export const Header = () => {
           ) : (
             <>
               <li>
-                <NavLink activeClassName={styles.activeLink} to="/login">
-                  Login
-                </NavLink>
+                <NavLink to="/login">Login</NavLink>
               </li>
               <li>
-                <NavLink activeClassName={styles.activeLink} to="/signup">
-                  Sign Up
-                </NavLink>
+                <NavLink to="/signup">Sign Up</NavLink>
               </li>
             </>
           )}

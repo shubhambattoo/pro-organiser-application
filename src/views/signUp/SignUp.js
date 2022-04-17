@@ -1,16 +1,17 @@
 import React, { useState, useContext } from 'react';
 import styles from '../../common/styles/formStyles.module.css';
 import commonStyle from '../../common/styles/styles.module.css';
-import { withRouter, Link, Redirect } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { firebaseApp } from '../../firebase/init';
 import { Alert } from '../../common/alert/Alert';
 import { AuthContext } from '../../context/Auth';
 
-const SignUp = ({ history }) => {
+const SignUp = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  let navigate = useNavigate();
 
   function handleSignUp() {
     if (!email || !password || !name) {
@@ -25,7 +26,7 @@ const SignUp = ({ history }) => {
         user
           .updateProfile({ displayName: name })
           .then(() => {
-            history.push('/');
+            navigate('/');
           })
           .catch((err) => {
             throw Error(err);
@@ -43,7 +44,7 @@ const SignUp = ({ history }) => {
   const { currentUser } = useContext(AuthContext);
 
   if (currentUser) {
-    return <Redirect to="/" />;
+    return <Navigate to="/" />;
   }
 
   return (
@@ -99,4 +100,4 @@ const SignUp = ({ history }) => {
   );
 };
 
-export default withRouter(SignUp);
+export default SignUp;

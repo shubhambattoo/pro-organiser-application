@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import commonStyles from './../../common/styles/styles.module.css';
 import styles from './Board.module.css';
 import {
@@ -14,10 +15,10 @@ import { Card } from '../../components/card/Card';
 import { AddCard } from '../../components/add-card/AddCard';
 import { AddColumn } from '../../components/add-column/AddColumn';
 import { createDeepCopy } from '../../utils/utility';
-import { nanoid } from 'nanoid'
+import { nanoid } from 'nanoid';
 import { Alert } from '../../common/alert/Alert';
 
-export const Board = ({ match, history }) => {
+export const Board = () => {
   const [loading, setLoading] = useState(true);
   const [board, setBoard] = useState({});
   const [isColumnAdd, setIsColumnAdd] = useState(false);
@@ -27,15 +28,17 @@ export const Board = ({ match, history }) => {
   const [isAdd, setIsAdd] = useState(true);
   const [inEditCard, setInEditCard] = useState(null);
   const [error, setError] = useState(null);
+  let navigate = useNavigate();
+  let params = useParams();
 
   useEffect(() => {
     (async function () {
-      const data = await getBoard(match.params.name);
+      const data = await getBoard(params.name);
       setBoard(data);
       await getAllColumns(data.id, setColumns);
       setLoading(false);
     })();
-  }, [match]);
+  }, [params]);
 
   function handleAddCloumn(columnName) {
     const newColumn = {
@@ -174,7 +177,7 @@ export const Board = ({ match, history }) => {
       );
       const val = await deleteBoard(board.id);
       if (val) {
-        history.push('/');
+        navigate('/');
       }
     }
   }
