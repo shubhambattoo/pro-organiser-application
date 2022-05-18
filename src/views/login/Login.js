@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import styles from './../../common/styles/formStyles.module.css';
 import commonStyle from './../../common/styles/styles.module.css';
 import { firebaseApp } from '../../firebase/init';
+import { getAuth } from 'firebase/auth';
 import { Navigate, Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/Auth';
 import { Alert } from '../../common/alert/Alert';
@@ -37,6 +38,22 @@ const Login = () => {
   }
 
   const { currentUser } = useContext(AuthContext);
+
+  const handleGuestLogin = () => {
+    setIsLogging(true);
+    const auth = getAuth();
+    firebaseApp
+      .auth(auth)
+      .signInAnonymously()
+      .then(() => {
+        setIsLogging(false);
+        navigate('/');
+      })
+      .catch((err) => {
+        setError('Something wrong with your email or Password. Try again!');
+        setIsLogging(false);
+      });
+  };
 
   if (currentUser) {
     return <Navigate to="/" />;
@@ -83,6 +100,10 @@ const Login = () => {
       </div>
       <div className={styles.meta}>
         Dont have an account? <Link to="/signup">Sign up</Link>.
+      </div>
+      <div className={styles.meta}>
+        Just want to check the website?{' '}
+        <button onClick={handleGuestLogin}>Continue as guest</button>
       </div>
     </div>
   );

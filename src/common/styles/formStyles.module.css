@@ -40,11 +40,23 @@
 .meta {
 	font-size: 14px;
 	color: #222;
-	text-transform: capitalize;
 	text-align: center;
+	margin-top: 10px;
 }
 
 .meta a {
 	color: #07787c;
 	text-decoration: none;
+}
+
+.meta button{
+	cursor: pointer;
+	border: none;
+	border-radius: 4px;
+	font-size: 16px;
+	text-transform: capitalize;
+	text-decoration: none;
+	color: #07787c;
+	display: inline-block;
+	background-color: transparent;
 }

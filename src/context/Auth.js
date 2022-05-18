@@ -7,7 +7,7 @@ export const AuthContext = React.createContext();
 
 const formatAuthUser = (user) => ({
   uid: user.uid,
-  email: user.email,
+  email: user.email || 'guest@pro-organisers.web.app',
 });
 
 export const AuthProvider = ({ children }) => {
